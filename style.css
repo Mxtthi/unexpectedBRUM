@@ -1,0 +1,8 @@
+.worldDiv {
+    display: grid;
+    justify-content: center;
+}
+
+.areaDiv {
+    background-color: green;
+}
