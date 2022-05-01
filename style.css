@@ -5,4 +5,21 @@
 
 .areaDiv {
     background-color: green;
+    background-size: cover;
+}
+
+.start {
+    background-color: black;
+}
+
+.straight {
+    background-image: url(./other/straight.png);
+}
+
+.left {
+    background-image: url(./other/left.png);
+}
+
+.right {
+    background-image: url(./other/right.png);
 }
