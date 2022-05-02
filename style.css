@@ -16,10 +16,10 @@
     background-image: url(./other/straight.png);
 }
 
-.left {
-    background-image: url(./other/left.png);
+.curve {
+    background-image: url(./other/curve.png);
 }
 
-.right {
-    background-image: url(./other/right.png);
+.crossing {
+    background-image: url(./other/crossing.png);
 }

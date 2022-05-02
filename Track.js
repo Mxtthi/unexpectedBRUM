@@ -3,11 +3,11 @@ class Track extends World {
         super(areaSize, worldSize);
         this.startPosX = startPosX;
         this.startPosY = startPosY;
-        this.trackLength = 10;
+        this.trackLength = 100;
         this.currentPos = 0;
 
-        this.getTrackCourse();
         this.createWorld();
+        this.getTrackCourse();
     }
 
     getTrackCourse() {
@@ -16,7 +16,12 @@ class Track extends World {
 
         for (let i = 0; i < this.trackLength; i++) {
             let nextPos = this.getNextPos();
+            if (nextPos == false) {
+                this.createTrack();
+                return;
+            }
             this.setCoursePos(nextPos.x, nextPos.y, nextPos.direction, nextPos.rotation, nextPos.turn);
+            this.createTrack();
         }
     }
 
@@ -26,59 +31,134 @@ class Track extends World {
     }
 
     getNextPos() {
-        let temp = this.getDirection();
-        temp.turn = this.getTurn(15, 30);
-        temp.rotation = this.getRotation(temp.turn);
+        let temp;
+        let isBlocked = false;
+        let counter = 0;
 
+        do {
+            temp = this.getDirection();
+            isBlocked = false;
+            if (temp == false) {
+                isBlocked = true;
+                counter++;
+            }
+            if (counter >= 5) {
+                return false;
+            }
+        } while (isBlocked == true)
+
+        let chanceTurn = 30;
+        chanceTurn = this.chanceChanges(chanceTurn);
+        if (temp.turn != "crossing") {
+            temp.turn = this.getTurn(chanceTurn, 100 - chanceTurn);
+            temp.rotation = this.getRotation(temp);
+        } else {
+            temp.rotation = 0;
+        }
         return temp;
+    }
+
+    chanceChanges(chanceTurn) {
+        let isStraight = true;
+        let i = 1;
+
+        if (this.currentPos < 5) {
+            return chanceTurn;
+        }
+
+        while (isStraight) {
+            if (this.currentPos - i <= 1 || this.trackCourse[this.currentPos - i].turn == "curve") {
+                isStraight == false;
+                break;
+            }
+            if (this.trackCourse[this.currentPos - i].turn == "straight") {
+                chanceTurn += 5;
+            }
+            i++;
+        }
+        if (this.trackCourse[this.currentPos - 1].turn == "curve") {
+            chanceTurn -= 20;
+        }
+        return chanceTurn;
     }
 
     getDirection() {
         let temp = {};
+        let direction;
         let lastArea = this.trackCourse[this.currentPos - 1];
 
-        if (lastArea.turn == "straight") {
-            if (lastArea.rotation == 0) {
-                temp = this.setDirection(getRandomInt(1, 2));
-            } else if (lastArea.rotation == 90) {
-                temp = this.setDirection(getRandomInt(3, 4));
-            }
-        } else if (lastArea.turn == "left") {
-            switch (lastArea.rotation) {
-                case 0:
-                    temp = this.setDirection(3);
+        if (lastArea.turn == "start") {
+            direction = getRandomInt(1, 4);
+        } else if (lastArea.turn == "straight" || lastArea.turn == "crossing") {
+
+            switch (lastArea.direction) {
+                case "up":
+                    direction = 1;
                     break;
-                case 90:
-                    temp = this.setDirection(1);
+                case "down":
+                    direction = 2;
                     break;
-                case 180:
-                    temp = this.setDirection(4);
+                case "left":
+                    direction = 3;
                     break;
-                case 270:
-                    temp = this.setDirection(2);
+                case "right":
+                    direction = 4;
                     break;
-            }
-        } else if (lastArea.turn == "right") {
-            switch (lastArea.rotation) {
-                case 0:
-                    temp = this.setDirection(4);
-                    break;
-                case 90:
-                    temp = this.setDirection(2);
-                    break;
-                case 180:
-                    temp = this.setDirection(3);
-                    break;
-                case 270:
-                    temp = this.setDirection(1);
+                default:
+                    console.log("unknown direction");
                     break;
             }
-        } else {
-            temp = this.setDirection(getRandomInt(1, 4));
+
+        } else if (lastArea.turn == "curve") {
+
+            switch (lastArea.direction) {
+                case "up":
+                    if (lastArea.rotation == 0) {
+                        direction = 3;
+                    } else if (lastArea.rotation == 270) {
+                        direction = 4;
+                    }
+                    break;
+                case "down":
+                    if (lastArea.rotation == 90) {
+                        direction = 3;
+                    } else if (lastArea.rotation == 180) {
+                        direction = 4;
+                    } else {
+                        console.log("unknown rotation");
+                    }
+                    break;
+                case "left":
+                    if (lastArea.rotation == 270) {
+                        direction = 2;
+                    } else if (lastArea.rotation == 180) {
+                        direction = 1;
+                    } else {
+                        console.log("unknown rotation");
+                    }
+                    break;
+                case "right":
+                    if (lastArea.rotation == 90) {
+                        direction = 1;
+                    } else if (lastArea.rotation == 0) {
+                        direction = 2;
+                    } else {
+                        console.log("unknown rotation");
+                    }
+                    break;
+                default:
+                    console.log("unknown direction");
+                    break;
+
+            }
         }
 
-        if (this.checkIfUsedAlready(temp.x, temp.y)) {
+        temp = this.setDirection(direction);
+        let check = this.checkIfUsedAlready(temp.x, temp.y);
+        if (check == true) {
             return false;
+        } else if (check == "crossing") {
+            temp.turn = "crossing";
         }
         return temp;
     }
@@ -110,71 +190,78 @@ class Track extends World {
         return temp;
     }
 
-    getRotation(turn) {
-        let lastArea = this.trackCourse[this.currentPos - 1];
-        let rotation = 0;
-
-        if (turn == "straight") {
-            if (lastArea.turn == "left" || lastArea.turn == "right") {
-                if (lastArea.rotation == 0 || lastArea.rotation == 180) {
-                    rotation = 90;
+    checkIfUsedAlready(x, y) {
+        if (this.worldSize <= x || x < 0 || this.worldSize <= y || y < 0) {
+            return true;
+        }
+        let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
+        console.log(x, y);
+        console.log(elem.classList);
+        let arr = ["straight", "curve", "start"];
+        for (let i = 0; i < arr.length; i++) {
+            for (let v = 0; v < elem.classList.length; v++) {
+                if (elem.classList[v].includes(arr[i])) {
+                    if (arr[i] == "straight" || arr[i] == "curve") {
+                        return "crossing";
+                    }
+                    return true;
                 }
-            } else {
-                rotation = lastArea.rotation;
             }
         }
-
-        if (turn == "left") {
-            if (lastArea.turn == "straight") {
-                if (lastArea.rotation == 90 && lastArea.direction == "left") {
-                    if (getByChance(50) == 1) {
-                        rotation = 180;
-                    } else {
-                        rotation = 270;
-                    }
-                } else if (lastArea.rotation == 90 && lastArea.direction == "right") {
-                    if (getByChance(50) == 1) {
-                        rotation = 90;
-                    }
-                }
-            } else if (lastArea.turn == "left") {
-                if (lastArea.rotation == 0 || lastArea.rotation == 90) {
-                    if (getByChance(50) == 1) {
-                        rotation = 180;
-                    } else {
-                        rotation = 270;
-                    }
-                } else if (lastArea.rotation == 90 && lastArea.direction == "right") {
-                    rotation = 90;
-                }
-            }
-
-
-        }
-        return rotation;
+        return false;
     }
 
-    getTurn(chanceLeft, chanceRight) {
-        let rndm = getRandomInt(1, 100);
-
-        if (rndm <= chanceLeft) {
-            return "left";
-        } else if (rndm <= chanceRight) {
-            return "right";
+    getTurn(chanceCurve, chanceStraight) {
+        if (getByChance(chanceCurve, chanceStraight) == 1) {
+            return "curve";
         } else {
             return "straight";
         }
     }
 
-    checkIfUsedAlready(x, y) {
-        let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
-        let arr = ["straight", "right", "left", "start"];
-        for (let i = 0; i < arr; i++) {
-            if (elem.include(arr[i])) {
-                return true;
+    getRotation(temp) {
+        let rotation = 0;
+        console.log(this.trackCourse.length, temp.turn, temp.direction);
+
+        if (temp.turn == "straight") {
+            if (temp.direction == "left" || temp.direction == "right") {
+                rotation = 90;
+            }
+        } else if (temp.turn == "curve") {
+
+            switch (temp.direction) {
+                case "up":
+                    if (getByChance(50, 50) == 1) {
+                        rotation = 270;
+                    }
+                    break;
+                case "down":
+                    if (getByChance(50, 50) == 1) {
+                        rotation = 90;
+                    } else {
+                        rotation = 180;
+                    }
+                    break;
+                case "left":
+                    if (getByChance(50, 50) == 1) {
+                        rotation = 180;
+                    } else {
+                        rotation = 270;
+                    }
+                    break;
+                case "right":
+                    if (getByChance(50, 50) == 1) {
+                        rotation = 90;
+                    }
+                    break;
+                default:
+                    console.log("unknown direction");
+                    break;
+
             }
         }
-        return false;
+
+        return rotation;
     }
 
     createTrack() {
@@ -187,18 +274,17 @@ class Track extends World {
                 case "straight":
                     element.classList.add("straight");
                     break;
-                case "left":
-                    element.classList.add("left");
+                case "curve":
+                    element.classList.add("curve");
                     break;
-                case "right":
-                    element.classList.add("right");
+                case "crossing":
+                    element.classList.add("crossing");
                     break;
                 default:
                     console.log("direction not found");
                     break;
             }
-            console.log(this.trackCourse[i].rotation);
-            element.setAttribute("style", `transform: rotate(${this.trackCourse[i].rotation}deg);`)
+            element.setAttribute("style", `transform: rotate(${this.trackCourse[i].rotation}deg); `)
         }
     }
 }

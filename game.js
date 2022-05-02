@@ -1,6 +1,6 @@
 window.onload = function () {
-    let world = new World(30, 30);
-    world.track = new Track(world.areaSize, world.worldSize, 15, 15);
+    let world = new World(50, 50);
+    world.track = new Track(world.areaSize, world.worldSize, 25, 25);
     world.track.createTrack();
     console.log(world);
 };
