@@ -1,35 +1,40 @@
-var bKeys = [];
+var keys = [];
 
-$('body').keydown(function (e) {
-    if (bKeys.includes(e.which) === false) {
-        bKeys.push(e.which);
-    }
+window.addEventListener("keydown",
+    function (e) {
+        if (keys.includes(e.key) === false) {
+            keys.push(e.key);
+        }
+    },
+    false);
 
-    for (let i = 0; i < bKeys.length; i++) {
-        switch (bKeys[i]) {
-            case 87:
+window.addEventListener('keyup',
+    function (e) {
+        keys.pop(e.key);
+    },
+    false);
+
+setInterval(() => {
+    for (let i = 0; i < keys.length; i++) {
+        switch (keys[i].toLowerCase()) {
+            case "w":
                 world.car.changeVelocity(1);
                 break;
-            case 83:
+            case "s":
                 world.car.changeVelocity(-1);
                 break;
-            case 65:
-                world.car.changeRotation(-3);
+            case "a":
+                world.car.changeRotation(-2.5);
                 break;
-            case 68:
-                world.car.changeRotation(3);
+            case "d":
+                world.car.changeRotation(2.5);
                 break;
             default:
                 console.log("key not found");
                 break;
         }
     }
-});
+}, 10);
 
-$('body').keyup(function (e) {
-    bKeys.pop(e.which);
-});
-setInterval(() => {
-    //console.log(bKeys);
-}, 15);
+
 

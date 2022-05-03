@@ -57,8 +57,7 @@ class Car extends World {
     }
 
     moveCar() {
-        let car = document.getElementsByClassName("car")[0];
-        car.style.transform = `rotate(${this.rotation}deg)`;
+        let car = document.getElementsByClassName("car")[0]; car.style.transform = `rotate(${this.rotation}deg)`;
         let posX = parseFloat(car.style.left.substring(0, car.style.left.length - 2));
         let posY = parseFloat(car.style.top.substring(0, car.style.top.length - 2))
 
@@ -66,12 +65,14 @@ class Car extends World {
         let cos = Math.cos(this.rotation * Math.PI / 180).toFixed(3);
         let movementX = (this.velocity / 100 * sin);
         let movementY = (this.velocity / 100 * cos) * -1;
-        console.log(sin, "sin", cos, "cos");
-        console.log(movementX, "x", movementY, "y", this.rotation, "rotation", this.velocity, "speed");
-        // console.log(posX, posY, "x y", this.velocity, "velocity");
         car.style.top = (posY + movementY) + "px";
         car.style.left = (posX + movementX) + "px";
-        console.log(car.style.top, "top", car.style.left, "left");
+        car.style.transform = `rotate(${this.rotation}deg)`;
+
+        /*console.log(sin, "sin", cos, "cos");
+        console.log(movementX, "x", movementY, "y", this.rotation, "rotation", this.velocity, "speed");
+        console.log(posX, posY, "x y", this.velocity, "velocity");
+        console.log(car.style.top, "top", car.style.left, "left");*/
     }
 
 

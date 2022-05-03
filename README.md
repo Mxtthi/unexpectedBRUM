@@ -3,5 +3,6 @@ car game
 
 ## todo
 
-- track creation
-- add car
+- change the way crossings work
+- only show certain part of track (fov)
+- keyUp is inconsistent
