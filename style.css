@@ -1,3 +1,7 @@
+body {
+    background-color: green;
+}
+
 .worldDiv {
     display: grid;
     justify-content: center;
