@@ -1,9 +1,9 @@
 class Track extends World {
-    constructor(areaSize, worldSize, startPosX, startPosY) {
+    constructor(areaSize, worldSize, trackLength, startPosX, startPosY) {
         super(areaSize, worldSize);
         this.startPosX = startPosX;
         this.startPosY = startPosY;
-        this.trackLength = 100;
+        this.trackLength = trackLength;
         this.currentPos = 0;
 
         this.createWorld();
@@ -195,8 +195,6 @@ class Track extends World {
             return true;
         }
         let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
-        console.log(x, y);
-        console.log(elem.classList);
         let arr = ["straight", "curve", "start"];
         for (let i = 0; i < arr.length; i++) {
             for (let v = 0; v < elem.classList.length; v++) {
@@ -221,7 +219,6 @@ class Track extends World {
 
     getRotation(temp) {
         let rotation = 0;
-        console.log(this.trackCourse.length, temp.turn, temp.direction);
 
         if (temp.turn == "straight") {
             if (temp.direction == "left" || temp.direction == "right") {

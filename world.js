@@ -2,6 +2,7 @@ class World {
     constructor(areaSize, worldSize) {
         this.areaSize = areaSize;
         this.worldSize = worldSize;
+        this.gameStatus = true;
     }
 
     createWorld() {

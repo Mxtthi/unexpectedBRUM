@@ -23,3 +23,11 @@
 .crossing {
     background-image: url(./other/crossing.png);
 }
+
+.car {
+    background-image: url(./other/car.png);
+    background-size: cover;
+    position: absolute;
+    left: 300px;
+    top: 300px;
+}
