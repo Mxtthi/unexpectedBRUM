@@ -1,8 +1,8 @@
 class Track extends World {
     constructor(areaSize, worldSize, trackLength, startPosX, startPosY) {
         super(areaSize, worldSize);
-        this.startPosX = startPosX;
-        this.startPosY = startPosY;
+        this.startPosX = getRandomInt(0, this.worldSize - 1);
+        this.startPosY = getRandomInt(0, this.worldSize - 1);
         this.trackLength = trackLength;
         this.currentPos = 0;
 
