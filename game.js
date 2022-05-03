@@ -1,5 +1,5 @@
-let areaSize = 50;
-let worldSize = 20;
+let areaSize = 75;
+let worldSize = 15;
 let trackLength = 500;
 let world = new World(areaSize, worldSize);
 world.track = new Track(world.areaSize, world.worldSize, trackLength);

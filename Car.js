@@ -36,9 +36,11 @@ class Car extends World {
             multiplicator = 5;
         }
 
-        this.velocity += value * multiplicator;
+        if (this.velocity >= -75 && this.velocity < 350 || this.velocity <= -75 && value > 0 || this.velocity >= 350 && value < 0) {
+            this.velocity += value * multiplicator;
+        }
         if (this.isDriving == false) {
-            let moveCarInterval = setInterval(() => this.moveCar(), 50);
+            let moveCarInterval = setInterval(() => this.moveCar(), 10);
             this.isDriving = true;
         }
     }
@@ -49,26 +51,27 @@ class Car extends World {
             this.rotation = 0;
         }
         if (this.isDriving == false) {
-            let moveCarInterval = setInterval(() => this.moveCar(), 50);
+            let moveCarInterval = setInterval(() => this.moveCar(), 10);
             this.isDriving = true;
         }
     }
 
     moveCar() {
         let car = document.getElementsByClassName("car")[0];
-        let posX = parseInt(car.style.left.substring(0, car.style.left.length - 2));
-        let posY = parseInt(car.style.top.substring(0, car.style.top.length - 2))
+        car.style.transform = `rotate(${this.rotation}deg)`;
+        let posX = parseFloat(car.style.left.substring(0, car.style.left.length - 2));
+        let posY = parseFloat(car.style.top.substring(0, car.style.top.length - 2))
 
         let sin = Math.sin(this.rotation * Math.PI / 180).toFixed(3);
         let cos = Math.cos(this.rotation * Math.PI / 180).toFixed(3);
-        let movementX = (this.velocity / 20 * sin);
-        let movementY = (this.velocity / 20 * cos) * -1;
+        let movementX = (this.velocity / 100 * sin);
+        let movementY = (this.velocity / 100 * cos) * -1;
         console.log(sin, "sin", cos, "cos");
-        console.log(movementX, "x", movementY, "y", this.rotation, "rotation");
+        console.log(movementX, "x", movementY, "y", this.rotation, "rotation", this.velocity, "speed");
         // console.log(posX, posY, "x y", this.velocity, "velocity");
         car.style.top = (posY + movementY) + "px";
         car.style.left = (posX + movementX) + "px";
-        car.style.transform = `rotate(${this.rotation}deg)`;
+        console.log(car.style.top, "top", car.style.left, "left");
     }
 
 

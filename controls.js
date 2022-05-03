@@ -14,10 +14,10 @@ $('body').keydown(function (e) {
                 world.car.changeVelocity(-1);
                 break;
             case 65:
-                world.car.changeRotation(-2);
+                world.car.changeRotation(-3);
                 break;
             case 68:
-                world.car.changeRotation(2);
+                world.car.changeRotation(3);
                 break;
             default:
                 console.log("key not found");
@@ -30,6 +30,6 @@ $('body').keyup(function (e) {
     bKeys.pop(e.which);
 });
 setInterval(() => {
-    console.log(bKeys);
+    //console.log(bKeys);
 }, 15);
 
