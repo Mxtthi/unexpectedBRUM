@@ -6,7 +6,6 @@ document.addEventListener("keydown",
             if (e.key == "w" || e.key == "s") {
                 world.car.accelerating = true;
             }
-            console.log(keys, e.key, "add")
             keys.push(e.key);
         }
     },
@@ -35,9 +34,6 @@ setInterval(() => {
                 break;
             case "d":
                 world.car.changeRotation(2.5);
-                break;
-            default:
-                console.log("key not found");
                 break;
         }
     }
