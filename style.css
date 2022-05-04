@@ -16,6 +16,10 @@ body {
     background-color: black;
 }
 
+.end {
+    background-color: black;
+}
+
 .straight {
     background-image: url(./other/straight.png);
 }

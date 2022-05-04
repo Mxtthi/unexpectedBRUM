@@ -65,8 +65,10 @@ class Car extends World {
         let cos = Math.cos(this.rotation * Math.PI / 180).toFixed(3);
         let movementX = (this.velocity / 100 * sin);
         let movementY = (this.velocity / 100 * cos) * -1;
-        car.style.top = (posY + movementY) + "px";
-        car.style.left = (posX + movementX) + "px";
+        if (movementX > 0.05 || movementY > 0.05 || movementX < -0.05 || movementY < -0.05) {
+            car.style.top = (posY + movementY) + "px";
+            car.style.left = (posX + movementX) + "px";
+        }
         car.style.transform = `rotate(${this.rotation}deg)`;
 
         /*console.log(sin, "sin", cos, "cos");

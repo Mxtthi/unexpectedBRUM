@@ -17,6 +17,7 @@ class Track extends World {
         for (let i = 0; i < this.trackLength; i++) {
             let nextPos = this.getNextPos();
             if (nextPos == false) {
+                this.trackCourse[this.currentPos - 1].turn = "end";
                 this.createTrack();
                 return;
             }
@@ -267,6 +268,10 @@ class Track extends World {
             switch (this.trackCourse[i].turn) {
                 case "start":
                     element.classList.add("start");
+                    break;
+                case "end":
+                    element.classList.remove("straight", "curve");
+                    element.classList.add("end");
                     break;
                 case "straight":
                     element.classList.add("straight");
