@@ -265,6 +265,7 @@ class Track extends World {
     createTrack() {
         for (let i = 0; i < this.trackCourse.length; i++) {
             const element = document.getElementsByClassName(`x${this.trackCourse[i].x} y${this.trackCourse[i].y}`)[0];
+            element.classList.add("road");
             switch (this.trackCourse[i].turn) {
                 case "start":
                     element.classList.add("start");

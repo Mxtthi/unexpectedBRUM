@@ -5,6 +5,5 @@ car game
 
 - change the way crossings work
 - only show certain part of track (fov)
-- add end-point
-- lose speed over time and on grass
+- face right direction on start
 - keyUp is inconsistent

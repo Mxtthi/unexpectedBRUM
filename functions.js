@@ -11,3 +11,10 @@ function getByChance(chance1, chance2) {
         return 2;
     }
 }
+
+function checkIfElementsOverlap(elem1, elem2) {
+    let pos1 = elem1.getBoundingClientRect();
+    let pos2 = elem2.getBoundingClientRect();
+
+    return !(pos1.top > pos2.bottom || pos1.right < pos2.left || pos1.bottom < pos2.top || pos1.left > pos2.right);
+}

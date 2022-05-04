@@ -17,6 +17,7 @@ class Car extends World {
     createCar() {
         this.velocity = 0;
         this.rotation = 0;
+        this.accelerating = false;
         this.isDriving = false;
     }
 
@@ -56,8 +57,39 @@ class Car extends World {
         }
     }
 
+    slowDown() {
+        let car = document.getElementsByClassName("car")[0];
+        let road = document.getElementsByClassName("road");
+        let onRoad = false;
+        for (let i = 0; i < road.length; i++) {
+            if (checkIfElementsOverlap(car, road[i])) {
+                onRoad = true;
+                break;
+            }
+        }
+        if (this.accelerating == false) {
+            if (this.velocity < 10) {
+                this.velocity *= 0.5;
+            } else if (this.velocity < 3) {
+                this.velocity = 0;
+            } else
+                this.velocity *= 0.99;
+        }
+
+        if (onRoad == false) {
+            if (this.velocity > 100 || this.velocity < -100) {
+                this.velocity *= 0.97;
+            } else if (this.velocity > 50 || this.velocity < -50) {
+                this.velocity += 0.98;
+            } else {
+                this.velocity += 0.99;
+            }
+        }
+    }
+
     moveCar() {
-        let car = document.getElementsByClassName("car")[0]; car.style.transform = `rotate(${this.rotation}deg)`;
+        this.slowDown();
+        let car = document.getElementsByClassName("car")[0];
         let posX = parseFloat(car.style.left.substring(0, car.style.left.length - 2));
         let posY = parseFloat(car.style.top.substring(0, car.style.top.length - 2))
 

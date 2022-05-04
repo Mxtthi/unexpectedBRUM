@@ -3,6 +3,9 @@ var keys = [];
 window.addEventListener("keydown",
     function (e) {
         if (keys.includes(e.key) === false) {
+            if (e.key == "w" || e.key == "s") {
+                world.car.accelerating = true;
+            }
             keys.push(e.key);
         }
     },
@@ -10,6 +13,9 @@ window.addEventListener("keydown",
 
 window.addEventListener('keyup',
     function (e) {
+        if (e.key == "w" || e.key == "s") {
+            world.car.accelerating = false;
+        }
         keys.pop(e.key);
     },
     false);
@@ -18,10 +24,10 @@ setInterval(() => {
     for (let i = 0; i < keys.length; i++) {
         switch (keys[i].toLowerCase()) {
             case "w":
-                world.car.changeVelocity(1);
+                world.car.changeVelocity(1.5);
                 break;
             case "s":
-                world.car.changeVelocity(-1);
+                world.car.changeVelocity(-1.5);
                 break;
             case "a":
                 world.car.changeRotation(-2.5);
