@@ -289,5 +289,9 @@ class Track extends World {
             }
             element.setAttribute("style", `transform: rotate(${this.trackCourse[i].rotation}deg); `)
         }
+        document.getElementsByClassName("start")[0].scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        });
     }
 }

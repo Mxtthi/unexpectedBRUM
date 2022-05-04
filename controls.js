@@ -1,22 +1,23 @@
 var keys = [];
 
-window.addEventListener("keydown",
+document.addEventListener("keydown",
     function (e) {
         if (keys.includes(e.key) === false) {
             if (e.key == "w" || e.key == "s") {
                 world.car.accelerating = true;
             }
+            console.log(keys, e.key, "add")
             keys.push(e.key);
         }
     },
     false);
 
-window.addEventListener('keyup',
+document.addEventListener("keyup",
     function (e) {
         if (e.key == "w" || e.key == "s") {
             world.car.accelerating = false;
         }
-        keys.pop(e.key);
+        keys = keys.filter(t => t !== e.key);
     },
     false);
 

@@ -1,5 +1,7 @@
-let areaSize = 75;
-let worldSize = 15;
+
+// let areaSize = (window.innerHeight + window.innerWidth) / 2 / 2;
+let areaSize = 100;
+let worldSize = 20;
 let trackLength = 500;
 let world = new World(areaSize, worldSize);
 world.track = new Track(world.areaSize, world.worldSize, trackLength);

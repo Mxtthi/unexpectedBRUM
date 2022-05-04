@@ -5,6 +5,5 @@ car game
 
 - change the way crossings work
 - only show certain part of track (fov)
-- face right direction on start
-- keyUp is inconsistent
+- change the way acceleration/breaking works -> percentage
  

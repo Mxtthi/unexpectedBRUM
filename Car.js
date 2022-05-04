@@ -1,17 +1,20 @@
 class Car extends World {
     constructor(areaSize, worldSize) {
         super(areaSize, worldSize);
-        let pos = document.getElementsByClassName("start")[0].getBoundingClientRect();
-        this.startPosX = pos.left + this.areaSize / 2;
-        this.startPosY = pos.top + this.areaSize / 2;
-        this.currentPosX = this.startPosX;
-        this.currentPosY = this.startPosY;
         this.height = Math.round(this.areaSize * 0.25);
         this.width = Math.round(this.height * 0.55);
 
         this.createCar();
         this.spawnCar();
 
+    }
+
+    getPos(elem) {
+        let temp = {};
+        let pos = elem.getBoundingClientRect();
+        temp.left = pos.left + this.areaSize / 2;
+        temp.top = pos.top + this.areaSize / 2;
+        return temp;
     }
 
     createCar() {
@@ -38,14 +41,23 @@ class Car extends World {
     }
 
     spawnCar() {
+        let start = document.getElementsByClassName("start")[0];
         let elem = document.createElement("div");
         elem.classList.add("car");
-        elem.style.left = this.startPosX + "px";
-        elem.style.top = this.startPosY + "px";
+        elem.style.left = this.getPos(start).left + "px";
+        elem.style.top = this.getPos(start).top + "px";
         elem.style.width = this.width + "px";
         elem.style.height = this.height + "px";
         elem.style.transform = `rotate(${this.rotation}deg)`;
         document.body.appendChild(elem);
+        let car = document.getElementsByClassName("car")[0]
+        car.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "center",
+        });
+        car.style.left = this.getPos(start).left + "px";
+        car.style.top = this.getPos(start).top + "px";
     }
 
     changeVelocity(value) {
@@ -54,7 +66,7 @@ class Car extends World {
             multiplicator = 5;
         }
 
-        if (this.velocity >= -75 && this.velocity < 350 || this.velocity <= -75 && value > 0 || this.velocity >= 350 && value < 0) {
+        if (this.velocity >= -250 && this.velocity < 1000 || this.velocity <= -250 && value > 0 || this.velocity >= 1000 && value < 0) {
             this.velocity += value * multiplicator;
         }
         if (this.isDriving == false) {
@@ -124,6 +136,12 @@ class Car extends World {
         console.log(movementX, "x", movementY, "y", this.rotation, "rotation", this.velocity, "speed");
         console.log(posX, posY, "x y", this.velocity, "velocity");
         console.log(car.style.top, "top", car.style.left, "left");*/
+
+        car.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "center",
+        });
     }
 
 
