@@ -16,9 +16,25 @@ class Car extends World {
 
     createCar() {
         this.velocity = 0;
-        this.rotation = 0;
         this.accelerating = false;
         this.isDriving = false;
+        switch (world.track.trackCourse[1].direction) {
+            case "up":
+                this.rotation = 0;
+                break;
+            case "down":
+                this.rotation = 180;
+                break;
+            case "left":
+                this.rotation = 270;
+                break;
+            case "right":
+                this.rotation = 90;
+                break;
+            default:
+                console.log("unknown direction");
+                break;
+        }
     }
 
     spawnCar() {
@@ -28,6 +44,7 @@ class Car extends World {
         elem.style.top = this.startPosY + "px";
         elem.style.width = this.width + "px";
         elem.style.height = this.height + "px";
+        elem.style.transform = `rotate(${this.rotation}deg)`;
         document.body.appendChild(elem);
     }
 

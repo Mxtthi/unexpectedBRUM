@@ -7,3 +7,4 @@ car game
 - only show certain part of track (fov)
 - face right direction on start
 - keyUp is inconsistent
+ 
