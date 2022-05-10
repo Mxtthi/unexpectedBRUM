@@ -10,17 +10,9 @@ class Car extends World {
 
     }
 
-    getPos(elem) {
-        let temp = {};
-        let pos = elem.getBoundingClientRect();
-        temp.left = pos.left + this.areaSize / 2;
-        temp.top = pos.top + this.areaSize / 2;
-        return temp;
-    }
-
     getCarPos() {
-        let elems = document.getElementsByClassName("areaDiv");
-        let car = document.getElementsByClassName("car")[0];
+        let elems = document.getElementsByClassName("areaDiv"),
+            car = document.getElementsByClassName("car")[0];
         for (let i = 0; i < elems.length; i++) {
             const element = elems[i];
             if (checkIfElementsOverlap(car, element)) {
@@ -29,6 +21,12 @@ class Car extends World {
                 console.log(this.currentPosition, "carPos");
             }
         }
+    }
+
+    setCarPos(x, y) {
+        let car = document.getElementsByClassName("car")[0];
+        car.style.left = x + "px";
+        car.style.top = y + "px";
     }
 
     createCar() {
@@ -63,22 +61,6 @@ class Car extends World {
         document.body.appendChild(elem);
     }
 
-    scrollToCar() {
-        let start = document.getElementsByClassName("start")[0];
-        let startPos = this.getPos(start);
-        console.log(start);
-        start.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-            inline: "center",
-        });
-
-        let car = document.getElementsByClassName("car")[0]
-        startPos = this.getPos(document.getElementsByClassName("start")[0]);
-        car.style.left = startPos.left + "px";
-        car.style.top = startPos.top + "px";
-    }
-
     changeVelocity(value) {
         let multiplicator = 1;
         if (this.velocity < 0 && value > 0 || this.velocity > 0 && value < 0) {
@@ -107,8 +89,8 @@ class Car extends World {
     }
 
     slowDown() {
-        let car = document.getElementsByClassName("car")[0];
-        let road = document.getElementsByClassName("road");
+        let car = document.getElementsByClassName("car")[0],
+            road = document.getElementsByClassName("road");
         let onRoad = false;
         for (let i = 0; i < road.length; i++) {
             if (checkIfElementsOverlap(car, road[i])) {
@@ -138,24 +120,19 @@ class Car extends World {
 
     moveCar() {
         this.slowDown();
-        let car = document.getElementsByClassName("car")[0];
-        let posX = parseFloat(car.style.left.substring(0, car.style.left.length - 2));
-        let posY = parseFloat(car.style.top.substring(0, car.style.top.length - 2))
+        let car = document.getElementsByClassName("car")[0],
+            posX = parseFloat(car.style.left.substring(0, car.style.left.length - 2)),
+            posY = parseFloat(car.style.top.substring(0, car.style.top.length - 2)),
 
-        let sin = Math.sin(this.rotation * Math.PI / 180).toFixed(3);
-        let cos = Math.cos(this.rotation * Math.PI / 180).toFixed(3);
-        let movementX = (this.velocity / 100 * sin);
-        let movementY = (this.velocity / 100 * cos) * -1;
+            sin = Math.sin(this.rotation * Math.PI / 180).toFixed(3),
+            cos = Math.cos(this.rotation * Math.PI / 180).toFixed(3);
+        movementX = (this.velocity / 100 * sin);
+        movementY = (this.velocity / 100 * cos) * -1;
         if (movementX > 0.05 || movementY > 0.05 || movementX < -0.05 || movementY < -0.05) {
             car.style.top = (posY + movementY) + "px";
             car.style.left = (posX + movementX) + "px";
         }
         car.style.transform = `rotate(${this.rotation}deg)`;
-
-        /*console.log(sin, "sin", cos, "cos");
-        console.log(movementX, "x", movementY, "y", this.rotation, "rotation", this.velocity, "speed");
-        console.log(posX, posY, "x y", this.velocity, "velocity");
-        console.log(car.style.top, "top", car.style.left, "left");*/
 
         car.scrollIntoView({
             behavior: "smooth",
@@ -163,6 +140,4 @@ class Car extends World {
             inline: "center",
         });
     }
-
-
 }

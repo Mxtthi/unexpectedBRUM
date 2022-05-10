@@ -6,10 +6,7 @@ class World {
     }
 
     loadWorld() {
-        let currentX;
-        let currentY;
-        let width;
-        let height;
+        let currentX, currentY, width, height;
 
         if (world.car !== undefined) {
             //world.car.getCarPos();
@@ -111,5 +108,20 @@ class World {
                 return i;
             }
         }
+    }
+
+    getPos(elem) {
+        let temp = {}, pos = elem.getBoundingClientRect();
+        temp.left = pos.x;
+        temp.top = pos.y;
+        return temp;
+    }
+
+    scrollToElem(elem) {
+        elem.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "center",
+        });
     }
 }
