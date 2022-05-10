@@ -1,5 +1,5 @@
 class Track extends World {
-    constructor(areaSize, worldSize, trackLength, startPosX, startPosY) {
+    constructor(areaSize, worldSize, trackLength) {
         super(areaSize, worldSize);
         this.startPosX = getRandomInt(0, this.worldSize - 1);
         this.startPosY = getRandomInt(0, this.worldSize - 1);
@@ -14,10 +14,15 @@ class Track extends World {
         this.trackCourse = [];
         this.area = Array.from(Array(worldSize), () => new Array(worldSize));
 
-        for (let i = 0; i < this.trackLength; i++) {
+        for (let i = 0; i <= this.trackLength; i++) {
             if (i == 0) {
                 this.setCoursePos(this.startPosX, this.startPosY, "up", 0, "start");
-            } else {
+            }
+            else if (i == this.trackLength) {
+                this.trackCourse[this.currentPos - 1].turn = "end";
+                return;
+            }
+            else {
                 let nextPos = this.getNextPos();
                 if (nextPos == false) {
                     this.trackCourse[this.currentPos - 1].turn = "end";
@@ -205,7 +210,7 @@ class Track extends World {
         if (elem == undefined) {
             return false;
         } else {
-            if (elem.turn == "straight" || elem.turn == "curve") {
+            if (elem.turn == "straight" || elem.turn == "curve" || elem.turn == "crossing") {
                 return "crossing";
             }
             return true;

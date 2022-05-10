@@ -35,9 +35,6 @@ setInterval(() => {
             case "d":
                 world.car.changeRotation(2.5);
                 break;
-            default:
-                console.log("key not found");
-                break;
         }
     }
 }, 10);
