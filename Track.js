@@ -12,22 +12,25 @@ class Track extends World {
 
     getTrackCourse() {
         this.trackCourse = [];
-        this.setCoursePos(this.startPosX, this.startPosY, "up", 0, "start");
+        this.area = Array.from(Array(worldSize), () => new Array(worldSize));
 
         for (let i = 0; i < this.trackLength; i++) {
-            let nextPos = this.getNextPos();
-            if (nextPos == false) {
-                this.trackCourse[this.currentPos - 1].turn = "end";
-                this.createTrack();
-                return;
+            if (i == 0) {
+                this.setCoursePos(this.startPosX, this.startPosY, "up", 0, "start");
+            } else {
+                let nextPos = this.getNextPos();
+                if (nextPos == false) {
+                    this.trackCourse[this.currentPos - 1].turn = "end";
+                    return;
+                }
+                this.setCoursePos(nextPos.x, nextPos.y, nextPos.direction, nextPos.rotation, nextPos.turn);
             }
-            this.setCoursePos(nextPos.x, nextPos.y, nextPos.direction, nextPos.rotation, nextPos.turn);
-            this.createTrack();
         }
     }
 
     setCoursePos(x, y, direction, rotation, turn) {
         this.trackCourse.push({ x: x, y: y, direction: direction, rotation: rotation, turn: turn });
+        this.area[y][x] = { x: x, y: y, direction: direction, rotation: rotation, turn: turn };
         this.currentPos++;
     }
 
@@ -50,12 +53,14 @@ class Track extends World {
 
         let chanceTurn = 30;
         chanceTurn = this.chanceChanges(chanceTurn);
+
         if (temp.turn != "crossing") {
             temp.turn = this.getTurn(chanceTurn, 100 - chanceTurn);
             temp.rotation = this.getRotation(temp);
         } else {
             temp.rotation = 0;
         }
+
         return temp;
     }
 
@@ -195,19 +200,16 @@ class Track extends World {
         if (this.worldSize <= x || x < 0 || this.worldSize <= y || y < 0) {
             return true;
         }
-        let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
-        let arr = ["straight", "curve", "start"];
-        for (let i = 0; i < arr.length; i++) {
-            for (let v = 0; v < elem.classList.length; v++) {
-                if (elem.classList[v].includes(arr[i])) {
-                    if (arr[i] == "straight" || arr[i] == "curve") {
-                        return "crossing";
-                    }
-                    return true;
-                }
+
+        let elem = this.area[y][x];
+        if (elem == undefined) {
+            return false;
+        } else {
+            if (elem.turn == "straight" || elem.turn == "curve") {
+                return "crossing";
             }
+            return true;
         }
-        return false;
     }
 
     getTurn(chanceCurve, chanceStraight) {
@@ -260,38 +262,5 @@ class Track extends World {
         }
 
         return rotation;
-    }
-
-    createTrack() {
-        for (let i = 0; i < this.trackCourse.length; i++) {
-            const element = document.getElementsByClassName(`x${this.trackCourse[i].x} y${this.trackCourse[i].y}`)[0];
-            element.classList.add("road");
-            switch (this.trackCourse[i].turn) {
-                case "start":
-                    element.classList.add("start");
-                    break;
-                case "end":
-                    element.classList.remove("straight", "curve");
-                    element.classList.add("end");
-                    break;
-                case "straight":
-                    element.classList.add("straight");
-                    break;
-                case "curve":
-                    element.classList.add("curve");
-                    break;
-                case "crossing":
-                    element.classList.add("crossing");
-                    break;
-                default:
-                    console.log("direction not found");
-                    break;
-            }
-            element.setAttribute("style", `transform: rotate(${this.trackCourse[i].rotation}deg); `)
-        }
-        document.getElementsByClassName("start")[0].scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-        });
     }
 }

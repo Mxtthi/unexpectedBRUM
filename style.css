@@ -6,14 +6,20 @@
 .areaDiv {
     background-color: green;
     background-size: cover;
+    display: none;
+}
+
+.active {
+    display: block;
+    background-color: green;
 }
 
 .start {
-    background-color: black;
+    background-color: black !important;
 }
 
 .end {
-    background-color: black;
+    background-color: black !important;
 }
 
 .straight {
@@ -31,7 +37,7 @@
 .car {
     background-image: url(./other/car.png);
     background-size: cover;
-    position: absolute;
+    position: fixed;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera 

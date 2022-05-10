@@ -2,7 +2,8 @@ class Car extends World {
     constructor(areaSize, worldSize) {
         super(areaSize, worldSize);
         this.height = Math.round(this.areaSize * 0.25);
-        this.width = Math.round(this.height * 0.55);
+        this.width = Math.round(this.height * 0.25 * 1.8);
+        this.currentPosition = { x: 0, y: 0 };
 
         this.createCar();
         this.spawnCar();
@@ -15,6 +16,19 @@ class Car extends World {
         temp.left = pos.left + this.areaSize / 2;
         temp.top = pos.top + this.areaSize / 2;
         return temp;
+    }
+
+    getCarPos() {
+        let elems = document.getElementsByClassName("areaDiv");
+        let car = document.getElementsByClassName("car")[0];
+        for (let i = 0; i < elems.length; i++) {
+            const element = elems[i];
+            if (checkIfElementsOverlap(car, element)) {
+                this.currentPosition.x = element.classList[0].substring(1);
+                this.currentPosition.y = element.classList[1].substring(1);
+                console.log(this.currentPosition, "carPos");
+            }
+        }
     }
 
     createCar() {
@@ -41,29 +55,34 @@ class Car extends World {
     }
 
     spawnCar() {
-        let start = document.getElementsByClassName("start")[0];
         let elem = document.createElement("div");
         elem.classList.add("car");
-        elem.style.left = this.getPos(start).left + "px";
-        elem.style.top = this.getPos(start).top + "px";
         elem.style.width = this.width + "px";
         elem.style.height = this.height + "px";
         elem.style.transform = `rotate(${this.rotation}deg)`;
         document.body.appendChild(elem);
-        let car = document.getElementsByClassName("car")[0]
-        car.scrollIntoView({
+    }
+
+    scrollToCar() {
+        let start = document.getElementsByClassName("start")[0];
+        let startPos = this.getPos(start);
+        console.log(start);
+        start.scrollIntoView({
             behavior: "smooth",
             block: "center",
             inline: "center",
         });
-        car.style.left = this.getPos(start).left + "px";
-        car.style.top = this.getPos(start).top + "px";
+
+        let car = document.getElementsByClassName("car")[0]
+        startPos = this.getPos(document.getElementsByClassName("start")[0]);
+        car.style.left = startPos.left + "px";
+        car.style.top = startPos.top + "px";
     }
 
     changeVelocity(value) {
         let multiplicator = 1;
         if (this.velocity < 0 && value > 0 || this.velocity > 0 && value < 0) {
-            multiplicator = 5;
+            multiplicator = 3;
         }
 
         if (this.velocity >= -250 && this.velocity < 1000 || this.velocity <= -250 && value > 0 || this.velocity >= 1000 && value < 0) {
@@ -73,6 +92,7 @@ class Car extends World {
             let moveCarInterval = setInterval(() => this.moveCar(), 10);
             this.isDriving = true;
         }
+        console.log(this.velocity);
     }
 
     changeRotation(value) {
@@ -102,7 +122,7 @@ class Car extends World {
             } else if (this.velocity < 3) {
                 this.velocity = 0;
             } else
-                this.velocity *= 0.99;
+                this.velocity *= 0.98;
         }
 
         if (onRoad == false) {
