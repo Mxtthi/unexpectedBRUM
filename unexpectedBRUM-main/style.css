@@ -1,0 +1,41 @@
+.worldDiv {
+    display: grid;
+    justify-content: center;
+}
+
+.areaDiv {
+    background-color: green;
+    background-size: cover;
+    display: none;
+}
+
+.active {
+    display: block;
+    background-color: green;
+}
+
+.start {
+    background-color: black !important;
+}
+
+.end {
+    background-color: black !important;
+}
+
+.straight {
+    background-image: url(./other/straight.png);
+}
+
+.curve {
+    background-image: url(./other/curve.png);
+}
+
+.crossing {
+    background-image: url(./other/crossing.png);
+}
+
+.car {
+    background-image: url(./other/car.png);
+    background-size: cover;
+    position: absolute;
+}
