@@ -12,15 +12,17 @@ class Car extends World {
 
     getCarPos() {
         let elems = document.getElementsByClassName("areaDiv"),
-            car = document.getElementsByClassName("car")[0];
+            car = document.getElementsByClassName("car")[0],
+            temp = { x: 1, y: 1 };
+
         for (let i = 0; i < elems.length; i++) {
-            const element = elems[i];
-            if (checkIfElementsOverlap(car, element)) {
-                this.currentPosition.x = element.classList[0].substring(1);
-                this.currentPosition.y = element.classList[1].substring(1);
-                console.log(this.currentPosition, "carPos");
+            if (checkIfElementsOverlap(car, elems[i])) {
+                temp.x = elems[i].classList[0].substring(1);
+                temp.y = elems[i].classList[1].substring(1);
+                return temp;
             }
         }
+        return temp;
     }
 
     setCarPos(x, y) {
@@ -74,7 +76,6 @@ class Car extends World {
             let moveCarInterval = setInterval(() => this.moveCar(), 10);
             this.isDriving = true;
         }
-        console.log(this.velocity);
     }
 
     changeRotation(value) {
@@ -125,19 +126,17 @@ class Car extends World {
             posY = parseFloat(car.style.top.substring(0, car.style.top.length - 2)),
 
             sin = Math.sin(this.rotation * Math.PI / 180).toFixed(3),
-            cos = Math.cos(this.rotation * Math.PI / 180).toFixed(3);
-        movementX = (this.velocity / 100 * sin);
-        movementY = (this.velocity / 100 * cos) * -1;
+            cos = Math.cos(this.rotation * Math.PI / 180).toFixed(3),
+            movementX = (this.velocity / 100 * sin),
+            movementY = (this.velocity / 100 * cos) * -1;
         if (movementX > 0.05 || movementY > 0.05 || movementX < -0.05 || movementY < -0.05) {
             car.style.top = (posY + movementY) + "px";
             car.style.left = (posX + movementX) + "px";
         }
         car.style.transform = `rotate(${this.rotation}deg)`;
 
-        car.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-            inline: "center",
-        });
+
+        // document.getElementsByClassName("car")[0].scrollIntoView();
+        car.scrollIntoView();
     }
 }

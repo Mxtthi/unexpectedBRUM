@@ -6,7 +6,6 @@ class Track extends World {
         this.trackLength = trackLength;
         this.currentPos = 0;
 
-        this.createWorld();
         this.getTrackCourse();
     }
 

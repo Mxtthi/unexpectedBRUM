@@ -9,3 +9,4 @@ car game
 - change the way acceleration/breaking works -> percentage
 - prohibit track from being too short (<10)
  
+ - getcarpos sometimes undefined

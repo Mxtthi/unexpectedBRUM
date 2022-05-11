@@ -6,22 +6,32 @@ class World {
     }
 
     loadWorld() {
-        let currentX, currentY, width, height;
+        let currentPos = {}, render = {};
 
         if (world.car !== undefined) {
-            //world.car.getCarPos();
-            currentX = parseInt(world.car.currentPosition.x);
-            currentY = parseInt(world.car.currentPosition.y);
+            let newPos = world.car.getCarPos();
+            currentPos.x = parseInt(newPos.x);
+            currentPos.y = parseInt(newPos.y);
         } else {
-            currentX = world.track.trackCourse[0].x;
-            currentY = world.track.trackCourse[0].y;
+            currentPos.x = world.track.trackCourse[0].x;
+            currentPos.y = world.track.trackCourse[0].y;
         }
+        console.log(currentPos, "HIER");
+        render.xStart = world.getRenderPos(currentPos.y, viewRadius);
+        render.yStart = world.getRenderPos(currentPos.x, viewRadius);
+        render.xEnd = currentPos.x + viewRadius;
+        render.yEnd = currentPos.y + viewRadius;
 
-        world.resetRender();
+        let height = render.xEnd - render.xStart + 1;
+        let width = render.yEnd - render.yStart + 1;
 
-        for (let y = world.getRenderPosY(currentY, viewRadius); y <= currentY + viewRadius; y++) {
-            for (let x = world.getRenderPosX(currentX, viewRadius); x <= currentX + viewRadius; x++) {
-                if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) {
+        world.removeElem(document.getElementsByClassName("worldDiv")[0]);
+        world.createWorld(render, viewRadius * 2 + 1);
+
+        for (let y = render.yStart; y <= render.yEnd; y++) {
+            for (let x = render.xStart; x <= render.xEnd; x++) {
+
+                if (y < 0 || y >= world.worldSize || x < 0 || x >= world.worldSize) {
                     break;
                 }
 
@@ -31,7 +41,6 @@ class World {
 
                     const track = world.track.trackCourse[i];
                     if (track.x == x && track.y == y) {
-                        console.log("place");
 
                         elem.classList.add("road");
                         switch (world.track.trackCourse[i].turn) {
@@ -39,7 +48,6 @@ class World {
                                 elem.classList.add("start");
                                 break;
                             case "end":
-                                elem.classList.remove("straight", "curve");
                                 elem.classList.add("end");
                                 break;
                             case "straight":
@@ -60,50 +68,38 @@ class World {
                         elem.setAttribute("style", `transform: rotate(${world.track.trackCourse[i].rotation}deg); `)
 
                     }
-
                 }
-                elem.classList.add("active");
-                width = x - world.getRenderPosX(currentX, viewRadius) + 1;
             }
-            height = y - world.getRenderPosY(currentY, viewRadius) + 1;
         }
-        console.log(width, height, "WICHTIG");
+
         document.getElementsByClassName("worldDiv")[0].setAttribute("style", `grid-template-columns: repeat(${width}, auto);`);
     }
 
-    resetRender() {
-        for (let i = document.getElementsByClassName("active").length - 1; i >= 0; i--) {
-            document.getElementsByClassName("active")[i].classList.remove("active");
+    removeElem(elem) {
+        if (elem != undefined) {
+            elem.remove();
         }
     }
 
-
-    createWorld() {
+    createWorld(pos, size) {
         let parentDiv = document.createElement("div");
         parentDiv.classList.add("worldDiv");
-        parentDiv.setAttribute("style", `grid-template-columns: repeat(${this.worldSize}, auto);`);
         document.body.appendChild(parentDiv);
 
-        for (let y = 0; y < this.worldSize; y++) {
-            for (let x = 0; x < this.worldSize; x++) {
+        for (let y = pos.yStart; y <= pos.yEnd; y++) {
+            for (let x = pos.xStart; x <= pos.xEnd; x++) {
+
                 let areaDiv = document.createElement("div");
                 areaDiv.classList.add("x" + x, "y" + y, "areaDiv");
                 areaDiv.setAttribute("style", `width: ${this.areaSize}px; height: ${this.areaSize}px`);
                 parentDiv.appendChild(areaDiv);
+
             }
         }
     }
 
-    getRenderPosX(currentX, viewRadius) {
-        for (let i = currentX - viewRadius; i <= currentX; i++) {
-            if (i >= 0) {
-                return i;
-            }
-        }
-    }
-
-    getRenderPosY(currentY, viewRadius) {
-        for (let i = currentY - viewRadius; i <= currentY; i++) {
+    getRenderPos(pos, viewRadius) {
+        for (let i = pos - viewRadius; i <= pos; i++) {
             if (i >= 0) {
                 return i;
             }
@@ -112,8 +108,8 @@ class World {
 
     getPos(elem) {
         let temp = {}, pos = elem.getBoundingClientRect();
-        temp.left = pos.x;
-        temp.top = pos.y;
+        temp.left = pos.left + window.scrollX;
+        temp.top = pos.top + window.scrollY;
         return temp;
     }
 
