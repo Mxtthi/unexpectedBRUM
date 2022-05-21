@@ -6,6 +6,16 @@
 .areaDiv {
     background-color: green;
     background-size: cover;
+    display: none;
+}
+
+.active {
+    display: block;
+    background-color: green;
+}
+
+.invisible {
+    visibility: hidden !important;
 }
 
 .start {
@@ -31,5 +41,5 @@
 .car {
     background-image: url(./other/car.png);
     background-size: cover;
-    position: absolute;
+    position: fixed;
 }

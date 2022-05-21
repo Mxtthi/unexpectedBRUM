@@ -6,6 +6,7 @@ class Track extends World {
         this.trackLength = trackLength;
         this.currentPos = 0;
 
+        this.createWorld();
         this.getTrackCourse();
     }
 
@@ -33,14 +34,15 @@ class Track extends World {
     }
 
     setCoursePos(x, y, direction, rotation, turn) {
-        let trackObj = { x: x, y: y, direction: direction, rotation: rotation, turn: turn };
-        this.trackCourse.push(trackObj);
-        this.area[y][x] = trackObj;
+        this.trackCourse.push({ x: x, y: y, direction: direction, rotation: rotation, turn: turn });
+        this.area[y][x] = { x: x, y: y, direction: direction, rotation: rotation, turn: turn };
         this.currentPos++;
     }
 
     getNextPos() {
-        let temp, isBlocked = false, counter = 0, chanceTurn = 30;;
+        let temp;
+        let isBlocked = false;
+        let counter = 0;
 
         do {
             temp = this.getDirection();
@@ -54,6 +56,7 @@ class Track extends World {
             }
         } while (isBlocked == true)
 
+        let chanceTurn = 30;
         chanceTurn = this.chanceChanges(chanceTurn);
 
         if (temp.turn != "crossing") {
@@ -67,7 +70,8 @@ class Track extends World {
     }
 
     chanceChanges(chanceTurn) {
-        let isStraight = true, i = 1;
+        let isStraight = true;
+        let i = 1;
 
         if (this.currentPos < 5) {
             return chanceTurn;
@@ -90,7 +94,9 @@ class Track extends World {
     }
 
     getDirection() {
-        let temp = {}, direction, lastArea = this.trackCourse[this.currentPos - 1];
+        let temp = {};
+        let direction;
+        let lastArea = this.trackCourse[this.currentPos - 1];
 
         if (lastArea.turn == "start") {
             direction = getRandomInt(1, 4);
