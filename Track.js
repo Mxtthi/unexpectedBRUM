@@ -104,6 +104,7 @@ class Track extends World {
             direction = getRandomInt(1, 4);
         } else if (lastArea.turn == "crossing" || lastArea.turn == "tcrossing") {
 
+            console.log(lastArea.nextDirection);
             direction = this.selectDirectionByString(lastArea.nextDirection[0]);
 
         }
@@ -217,6 +218,10 @@ class Track extends World {
                 temp.nextDirection.splice(index, 1);
             }
 
+            if (temp.nextDirection.length == 0) {
+                temp.nextDirection.push(this.trackCourse[this.currentPos - 1].direction);
+            }
+
         } else if (used == 2) {
 
             temp.turn = "tcrossing";
@@ -247,7 +252,6 @@ class Track extends World {
             }
             temp.rotation = parseInt(rot);
             temp.nextDirection.push(possiblities[rot][0]);
-
         }
 
         return temp;
@@ -255,6 +259,7 @@ class Track extends World {
 
     setDirection(direction) {
         let temp = {};
+        console.log(direction);
         switch (direction) {
             case 1:
                 temp.direction = "up";
