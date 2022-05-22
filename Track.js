@@ -164,8 +164,8 @@ class Track extends World {
 
             if (temp.x - 1 >= 0) pos.left = this.area[temp.y][temp.x - 1];
             if (temp.x + 1 < worldSize) pos.right = this.area[temp.y][temp.x + 1];
-            if (temp.y - 1 >= 0) pos.down = this.area[temp.y - 1][temp.x];
-            if (temp.y + 1 < worldSize) pos.up = this.area[temp.y + 1][temp.x];
+            if (temp.y - 1 >= 0) pos.up = this.area[temp.y - 1][temp.x];
+            if (temp.y + 1 < worldSize) pos.down = this.area[temp.y + 1][temp.x];
 
             temp = this.getCrossing(temp, pos);
 
@@ -208,6 +208,8 @@ class Track extends World {
                 }
             }
         }
+
+        console.log(this.trackCourse.length, used, pos, connections)
 
         if (used >= 3) {
             temp.turn = "crossing";
@@ -259,7 +261,6 @@ class Track extends World {
 
     setDirection(direction) {
         let temp = {};
-        console.log(direction);
         switch (direction) {
             case 1:
                 temp.direction = "up";
