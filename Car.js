@@ -1,7 +1,7 @@
 class Car extends World {
     constructor(areaSize, worldSize) {
         super(areaSize, worldSize);
-        this.height = Math.round(this.areaSize * 0.25);
+        this.height = Math.round(this.areaSize * 0.15);
         this.currentPosition = { x: 0, y: 0 };
 
         this.createCar();
@@ -25,7 +25,6 @@ class Car extends World {
             if (checkIfElementsOverlap(car, element)) {
                 this.currentPosition.x = element.classList[0].substring(1);
                 this.currentPosition.y = element.classList[1].substring(1);
-                // console.log(this.currentPosition, "carPos");
             }
         }
     }

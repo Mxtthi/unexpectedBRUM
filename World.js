@@ -16,7 +16,7 @@ class World {
                 let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
 
 
-                // elem.classList.add("invisible");
+                elem.classList.add("invisible");
             }
         }
         document.getElementsByClassName("worldDiv")[0].setAttribute("style", `grid-template-columns: repeat(${world.worldSize}, auto); `);
@@ -103,6 +103,7 @@ class World {
         for (let y = 0; y < this.worldSize; y++) {
             for (let x = 0; x < this.worldSize; x++) {
                 let areaDiv = document.createElement("div");
+                // areaDiv.classList.add("x" + x, "y" + y, "areaDiv", "invisible");
                 areaDiv.classList.add("x" + x, "y" + y, "areaDiv");
                 areaDiv.setAttribute("style", `width: ${this.areaSize}px; height: ${this.areaSize}px`);
                 parentDiv.appendChild(areaDiv);

@@ -7,3 +7,5 @@ world.car.setCarPos(start.left, start.top);
 world.car.scrollToCar();
 world.updateWorld();
 let intervalDings = setInterval(world.updateWorld, 100);
+
+console.log(world.track.trackCourse.length)
