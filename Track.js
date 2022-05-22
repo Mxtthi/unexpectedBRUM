@@ -174,10 +174,10 @@ class Track extends World {
             return false;
         } else if (pos.middle == false || pos.middle == "crossing") {
 
-            pos.left = this.checkIfUsedAlready(temp.x - 1, temp.y);
-            pos.right = this.checkIfUsedAlready(temp.x + 1, temp.y);
-            pos.bottom = this.checkIfUsedAlready(temp.x, temp.y - 1);
-            pos.top = this.checkIfUsedAlready(temp.x, temp.y + 1);
+            if (temp.x - 1 >= 0) pos.left = this.area[temp.y][temp.x - 1];
+            if (temp.x + 1 < worldSize) pos.right = this.area[temp.y][temp.x + 1];
+            if (temp.y - 1 >= 0) pos.down = this.area[temp.y - 1][temp.x];
+            if (temp.y + 1 < worldSize) pos.up = this.area[temp.y + 1][temp.x];
 
             temp = this.getCrossing(temp, pos);
 
@@ -187,12 +187,17 @@ class Track extends World {
 
     getCrossing(temp, pos) {
         let used = 0;
+        let dir = { "left": "right", "right": "left", "up": "down", "down": "up" };
         for (const key in pos) {
             const element = pos[key];
-            if (element != false && key != "middle") {
-                used++;
+            if (element != false && element != undefined && key != "middle") {
+                if (element.facing.includes(dir[key])) {
+                    used++;
+                }
             }
         }
+
+        console.log(temp, used, this.trackCourse.length);
 
         if (used >= 3) {
             temp.turn = "crossing";
@@ -252,53 +257,55 @@ class Track extends World {
     getRotation(temp) {
         let obj = {};
         obj.rotation = 0;
+        obj.facing = [];
 
         if (temp.turn == "straight") {
             if (temp.direction == "left" || temp.direction == "right") {
                 obj.rotation = 90;
+                obj.facing = ["left", "right"];
+            } else {
+                obj.facing = ["up", "down"];
             }
-            obj.facing = temp.direction;
         } else if (temp.turn == "curve") {
 
             switch (temp.direction) {
                 case "up":
                     if (getByChance(50, 50) == 1) {
                         obj.rotation = 270;
-                        obj.facing = "right";
+                        obj.facing = ["right", "down"];
                     } else {
-                        obj.facing = "left";
+                        obj.facing = ["left", "down"];
                     }
                     break;
                 case "down":
                     if (getByChance(50, 50) == 1) {
                         obj.rotation = 90;
-                        obj.facing = "left";
+                        obj.facing = ["left", "up"];
                     } else {
                         obj.rotation = 180;
-                        obj.facing = "right";
+                        obj.facing = ["right", "up"];
                     }
                     break;
                 case "left":
                     if (getByChance(50, 50) == 1) {
                         obj.rotation = 180;
-                        obj.facing = "up";
+                        obj.facing = ["right", "up"];
                     } else {
                         obj.rotation = 270;
-                        obj.facing = "down";
+                        obj.facing = ["right", "down"];
                     }
                     break;
                 case "right":
                     if (getByChance(50, 50) == 1) {
                         obj.rotation = 90;
-                        obj.facing = "up";
+                        obj.facing = ["left", "up"];
                     } else {
-                        obj.facing = "down";
+                        obj.facing = ["left", "down"];
                     }
                     break;
                 default:
                     console.log("unknown direction");
                     break;
-
             }
         }
 
