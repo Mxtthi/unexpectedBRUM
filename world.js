@@ -19,7 +19,8 @@ class World {
                 for (let i = 0; i < world.track.trackCourse.length; i++) {
 
                     const track = world.track.trackCourse[i];
-                    if (track.x == x && track.y == y) {elem.classList.add("road");
+                    if (track.x == x && track.y == y) {
+                        elem.classList.add("road");
                         switch (world.track.trackCourse[i].turn) {
                             case "start":
                                 elem.classList.add("start");
@@ -53,14 +54,12 @@ class World {
     }
 
     updateWorld() {
-<<<<<<< HEAD
-        if(checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
+        if (checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
             alert("finished race");
             location.reload();
         }
 
-=======
->>>>>>> f0b2c892ef61a523756b4624290f67a4c45b6826
+
         world.car.getCarPos();
 
         let currentX;
@@ -128,7 +127,6 @@ class World {
                 return i;
             }
         }
-<<<<<<< HEAD
     }
 
     centerElem(elem) {
@@ -137,7 +135,5 @@ class World {
             block: 'center',
             inline: 'center'
         });
-=======
->>>>>>> f0b2c892ef61a523756b4624290f67a4c45b6826
     }
 }
