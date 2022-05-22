@@ -18,7 +18,7 @@ class Track extends World {
         for (let i = 0; i <= this.trackLength; i++) {
 
             if (i == 0) {
-                this.setCoursePos(this.startPosX, this.startPosY, "up", 0, "start");
+                this.setCoursePos(this.startPosX, this.startPosY, "up", 0, "start", "unknown");
             } else if (i == this.trackLength) {
                 this.trackCourse[this.currentPos - 1].turn = "end";
                 return;
@@ -29,15 +29,15 @@ class Track extends World {
                     this.trackCourse[this.currentPos - 1].turn = "end";
                     return;
                 } else {
-                    this.setCoursePos(nextPos.x, nextPos.y, nextPos.direction, nextPos.rotation, nextPos.turn);
+                    this.setCoursePos(nextPos.x, nextPos.y, nextPos.direction, nextPos.rotation, nextPos.turn, nextPos.facing);
                 }
             }
         }
     }
 
-    setCoursePos(x, y, direction, rotation, turn) {
-        this.trackCourse.push({ x: x, y: y, direction: direction, rotation: rotation, turn: turn });
-        this.area[y][x] = { x: x, y: y, direction: direction, rotation: rotation, turn: turn };
+    setCoursePos(x, y, direction, rotation, turn, facing) {
+        this.trackCourse.push({ x: x, y: y, direction: direction, rotation: rotation, turn: turn, facing: facing });
+        this.area[y][x] = { x: x, y: y, direction: direction, rotation: rotation, turn: turn, facing: facing };
         this.currentPos++;
     }
 
@@ -61,10 +61,14 @@ class Track extends World {
         if (temp.turn != "crossing" && temp.turn != "tcrossing") {
             let chanceTurn = this.getChangeForTurn(30);
             temp.turn = this.getTurn(chanceTurn, 100 - chanceTurn);
-            temp.rotation = this.getRotation(temp);
+            let obj = this.getRotation(temp);
+            temp.rotation = obj.rotation, temp.facing = obj.facing;
         } else {
             temp.rotation = 0;
+            temp.facing = "unknown";
         }
+
+        console.log(temp);
 
         return temp;
     }
@@ -246,37 +250,49 @@ class Track extends World {
     }
 
     getRotation(temp) {
-        let rotation = 0;
+        let obj = {};
+        obj.rotation = 0;
 
         if (temp.turn == "straight") {
             if (temp.direction == "left" || temp.direction == "right") {
-                rotation = 90;
+                obj.rotation = 90;
             }
+            obj.facing = temp.direction;
         } else if (temp.turn == "curve") {
 
             switch (temp.direction) {
                 case "up":
                     if (getByChance(50, 50) == 1) {
-                        rotation = 270;
+                        obj.rotation = 270;
+                        obj.facing = "right";
+                    } else {
+                        obj.facing = "left";
                     }
                     break;
                 case "down":
                     if (getByChance(50, 50) == 1) {
-                        rotation = 90;
+                        obj.rotation = 90;
+                        obj.facing = "left";
                     } else {
-                        rotation = 180;
+                        obj.rotation = 180;
+                        obj.facing = "right";
                     }
                     break;
                 case "left":
                     if (getByChance(50, 50) == 1) {
-                        rotation = 180;
+                        obj.rotation = 180;
+                        obj.facing = "up";
                     } else {
-                        rotation = 270;
+                        obj.rotation = 270;
+                        obj.facing = "down";
                     }
                     break;
                 case "right":
                     if (getByChance(50, 50) == 1) {
-                        rotation = 90;
+                        obj.rotation = 90;
+                        obj.facing = "up";
+                    } else {
+                        obj.facing = "down";
                     }
                     break;
                 default:
@@ -286,6 +302,6 @@ class Track extends World {
             }
         }
 
-        return rotation;
+        return obj;
     }
 }

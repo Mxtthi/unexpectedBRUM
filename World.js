@@ -56,7 +56,7 @@ class World {
 
             }
             elem.setAttribute("style", `transform: rotate(${world.track.trackCourse[i].rotation}deg); `);
-            console.log("tset");
+            console.log(world.track.trackCourse[i]);
         }
     }
 
