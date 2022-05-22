@@ -18,7 +18,7 @@ class Track extends World {
         for (let i = 0; i <= this.trackLength; i++) {
 
             if (i == 0) {
-                this.setCoursePos(this.startPosX, this.startPosY, "up", 0, "start", ["left", "right", "up", "down"]);
+                this.setCoursePos(this.startPosX, this.startPosY, "up", 0, "start", ["left", "right", "up", "down"], []);
             } else if (i == this.trackLength) {
                 this.trackCourse[this.currentPos - 1].turn = "end";
                 return;
@@ -29,15 +29,15 @@ class Track extends World {
                     this.trackCourse[this.currentPos - 1].turn = "end";
                     return;
                 } else {
-                    this.setCoursePos(nextPos.x, nextPos.y, nextPos.direction, nextPos.rotation, nextPos.turn, nextPos.facing);
+                    this.setCoursePos(nextPos.x, nextPos.y, nextPos.direction, nextPos.rotation, nextPos.turn, nextPos.facing, nextPos.nextDirection);
                 }
             }
         }
     }
 
-    setCoursePos(x, y, direction, rotation, turn, facing) {
-        this.trackCourse.push({ x: x, y: y, direction: direction, rotation: rotation, turn: turn, facing: facing });
-        this.area[y][x] = { x: x, y: y, direction: direction, rotation: rotation, turn: turn, facing: facing };
+    setCoursePos(x, y, direction, rotation, turn, facing, nextDirection) {
+        this.trackCourse.push({ x: x, y: y, direction: direction, rotation: rotation, turn: turn, facing: facing, nextDirection: nextDirection });
+        this.area[y][x] = { x: x, y: y, direction: direction, rotation: rotation, turn: turn, facing: facing, nextDirection: nextDirection };
         this.currentPos++;
     }
 
@@ -67,8 +67,6 @@ class Track extends World {
             temp.rotation = 0;
             temp.facing = ["left", "right", "up", "down"];
         }
-
-        console.log(temp);
 
         return temp;
     }
@@ -104,25 +102,14 @@ class Track extends World {
 
         if (lastArea.turn == "start") {
             direction = getRandomInt(1, 4);
-        } else if (lastArea.turn == "straight" || lastArea.turn == "crossing" || lastArea.turn == "tcrossing") {
+        } else if (lastArea.turn == "crossing" || lastArea.turn == "tcrossing") {
 
-            switch (lastArea.direction) {
-                case "up":
-                    direction = 1;
-                    break;
-                case "down":
-                    direction = 2;
-                    break;
-                case "left":
-                    direction = 3;
-                    break;
-                case "right":
-                    direction = 4;
-                    break;
-                default:
-                    console.log("unknown direction");
-                    break;
-            }
+            direction = this.selectDirectionByString(lastArea.nextDirection[0]);
+
+        }
+        else if (lastArea.turn == "straight") {
+
+            direction = this.selectDirectionByString(lastArea.direction);
 
         } else if (lastArea.turn == "curve") {
 
@@ -166,8 +153,8 @@ class Track extends World {
                     break;
             }
         }
-
         temp = this.setDirection(direction);
+        temp.nextDirection = [];
         let pos = {};
         pos.middle = this.checkIfUsedAlready(temp.x, temp.y);
         if (pos.middle == true) {
@@ -185,6 +172,28 @@ class Track extends World {
         return temp;
     }
 
+    selectDirectionByString(inputDirection) {
+        let direction;
+        switch (inputDirection) {
+            case "up":
+                direction = 1;
+                break;
+            case "down":
+                direction = 2;
+                break;
+            case "left":
+                direction = 3;
+                break;
+            case "right":
+                direction = 4;
+                break;
+            default:
+                console.log("unknown direction");
+                break;
+        }
+        return direction;
+    }
+
     getCrossing(temp, pos) {
         let used = 0;
         let connections = [];
@@ -199,10 +208,15 @@ class Track extends World {
             }
         }
 
-        console.log(temp, used, connections, this.trackCourse.length);
-
         if (used >= 3) {
             temp.turn = "crossing";
+            temp.nextDirection = ["left", "right", "up", "down"];
+
+            for (let i = 0; i < connections.length; i++) {
+                const index = temp.nextDirection.indexOf(connections[i]);
+                temp.nextDirection.splice(index, 1);
+            }
+
         } else if (used == 2) {
 
             temp.turn = "tcrossing";
@@ -215,8 +229,6 @@ class Track extends World {
             }
             let possibleRotations = [];
             let rot;
-
-            console.log(possiblities, "here 1")
 
             for (const key in possiblities) {
                 if (possiblities[key].includes(connections[0]) && possiblities[key].includes(connections[1])) possibleRotations.push(key);
@@ -234,8 +246,7 @@ class Track extends World {
                 possiblities[rot].splice(index, 1);
             }
             temp.rotation = parseInt(rot);
-            nextDirection = possiblities[rot][0];
-            console.log(nextDirection, temp.rotation, "oiofjadf")
+            temp.nextDirection.push(possiblities[rot][0]);
 
         }
 
