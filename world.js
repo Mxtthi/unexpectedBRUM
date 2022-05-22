@@ -19,8 +19,7 @@ class World {
                 for (let i = 0; i < world.track.trackCourse.length; i++) {
 
                     const track = world.track.trackCourse[i];
-                    if (track.x == x && track.y == y) {
-                        elem.classList.add("road");
+                    if (track.x == x && track.y == y) {elem.classList.add("road");
                         switch (world.track.trackCourse[i].turn) {
                             case "start":
                                 elem.classList.add("start");
@@ -54,11 +53,10 @@ class World {
     }
 
     updateWorld() {
-        if (checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
+        if(checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
             alert("finished race");
             location.reload();
         }
-
 
         world.car.getCarPos();
 
