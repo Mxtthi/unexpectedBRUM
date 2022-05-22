@@ -1,4 +1,4 @@
-let worldSize = 10;
-let viewRadius = 2;
+let worldSize = 50;
+let viewRadius = worldSize;
 let trackLength = 500;
-let areaSize = window.innerWidth / 2;
+let areaSize = window.innerWidth / worldSize;

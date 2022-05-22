@@ -13,12 +13,13 @@ class Track extends World {
     getTrackCourse() {
         this.trackCourse = [];
         this.area = Array.from(Array(worldSize), () => new Array(worldSize));
+        console.log(this.area, 0 in this.area[0]);
 
         for (let i = 0; i <= this.trackLength; i++) {
+
             if (i == 0) {
                 this.setCoursePos(this.startPosX, this.startPosY, "up", 0, "start");
-            }
-            else if (i == this.trackLength) {
+            } else if (i == this.trackLength) {
                 this.trackCourse[this.currentPos - 1].turn = "end";
                 return;
             }
@@ -27,8 +28,9 @@ class Track extends World {
                 if (nextPos == false) {
                     this.trackCourse[this.currentPos - 1].turn = "end";
                     return;
+                } else {
+                    this.setCoursePos(nextPos.x, nextPos.y, nextPos.direction, nextPos.rotation, nextPos.turn);
                 }
-                this.setCoursePos(nextPos.x, nextPos.y, nextPos.direction, nextPos.rotation, nextPos.turn);
             }
         }
     }
@@ -56,10 +58,8 @@ class Track extends World {
             }
         } while (isBlocked == true)
 
-        let chanceTurn = 30;
-        chanceTurn = this.chanceChanges(chanceTurn);
-
-        if (temp.turn != "crossing") {
+        if (temp.turn != "crossing" && temp.turn != "tcrossing") {
+            let chanceTurn = this.getChangeForTurn(30);
             temp.turn = this.getTurn(chanceTurn, 100 - chanceTurn);
             temp.rotation = this.getRotation(temp);
         } else {
@@ -69,7 +69,7 @@ class Track extends World {
         return temp;
     }
 
-    chanceChanges(chanceTurn) {
+    getChangeForTurn(chanceTurn) {
         let isStraight = true;
         let i = 1;
 
@@ -100,7 +100,7 @@ class Track extends World {
 
         if (lastArea.turn == "start") {
             direction = getRandomInt(1, 4);
-        } else if (lastArea.turn == "straight" || lastArea.turn == "crossing") {
+        } else if (lastArea.turn == "straight" || lastArea.turn == "crossing" || lastArea.turn == "tcrossing") {
 
             switch (lastArea.direction) {
                 case "up":
@@ -160,17 +160,42 @@ class Track extends World {
                 default:
                     console.log("unknown direction");
                     break;
-
             }
         }
 
         temp = this.setDirection(direction);
-        let check = this.checkIfUsedAlready(temp.x, temp.y);
-        if (check == true) {
+        let pos = {};
+        pos.middle = this.checkIfUsedAlready(temp.x, temp.y);
+        if (pos.middle == true) {
             return false;
-        } else if (check == "crossing") {
-            temp.turn = "crossing";
+        } else if (pos.middle == false || pos.middle == "crossing") {
+
+            pos.left = this.checkIfUsedAlready(temp.x - 1, temp.y);
+            pos.right = this.checkIfUsedAlready(temp.x + 1, temp.y);
+            pos.bottom = this.checkIfUsedAlready(temp.x, temp.y - 1);
+            pos.top = this.checkIfUsedAlready(temp.x, temp.y + 1);
+
+            temp = this.getCrossing(temp, pos);
+
         }
+        return temp;
+    }
+
+    getCrossing(temp, pos) {
+        let used = 0;
+        for (const key in pos) {
+            const element = pos[key];
+            if (element != false && key != "middle") {
+                used++;
+            }
+        }
+
+        if (used >= 3) {
+            temp.turn = "crossing";
+        } else if (used > 1) {
+            temp.turn = "tcrossing";
+        }
+
         return temp;
     }
 
@@ -205,15 +230,10 @@ class Track extends World {
         if (this.worldSize <= x || x < 0 || this.worldSize <= y || y < 0) {
             return true;
         }
-
-        let elem = this.area[y][x];
-        if (elem == undefined) {
+        if (this.area[y][x] == undefined) {
             return false;
         } else {
-            if (elem.turn == "straight" || elem.turn == "curve" || elem.turn == "crossing") {
-                return "crossing";
-            }
-            return true;
+            return "crossing";
         }
     }
 

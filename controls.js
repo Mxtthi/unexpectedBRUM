@@ -8,7 +8,7 @@ document.addEventListener("keydown",
             }
             if (e.key == "Tab") {
                 e.preventDefault();
-                location.reload();
+                location.reload(true);
             }
             keys.push(e.key);
         }

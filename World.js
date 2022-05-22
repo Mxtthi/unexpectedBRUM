@@ -6,7 +6,6 @@ class World {
     }
 
     loadWorld() {
-        world.resetRender();
 
         for (let y = 0; y < world.worldSize; y++) {
             for (let x = 0; x < world.worldSize; x++) {
@@ -16,46 +15,56 @@ class World {
 
                 let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
 
-                for (let i = 0; i < world.track.trackCourse.length; i++) {
 
-                    const track = world.track.trackCourse[i];
-                    if (track.x == x && track.y == y) {elem.classList.add("road");
-                        switch (world.track.trackCourse[i].turn) {
-                            case "start":
-                                elem.classList.add("start");
-                                break;
-                            case "end":
-                                elem.classList.remove("straight", "curve");
-                                elem.classList.add("end");
-                                break;
-                            case "straight":
-                                elem.classList.add("straight");
-                                break;
-                            case "curve":
-                                elem.classList.add("curve");
-                                break;
-                            case "crossing":
-                                elem.classList.add("crossing");
-                                break;
-                            default:
-                                console.log("direction not found");
-                                break;
-
-                        }
-                        elem.classList.add("road");
-                        elem.setAttribute("style", `transform: rotate(${world.track.trackCourse[i].rotation}deg); `)
-                    }
-                }
-                elem.classList.add("active", "invisible");
+                // elem.classList.add("invisible");
             }
         }
-        document.getElementsByClassName("worldDiv")[0].setAttribute("style", `grid-template-columns: repeat(${world.worldSize}, auto);`);
+        document.getElementsByClassName("worldDiv")[0].setAttribute("style", `grid-template-columns: repeat(${world.worldSize}, auto); `);
+
+
+        for (let i = 0; i < world.track.trackCourse.length; i++) {
+
+            let x = world.track.trackCourse[i].x;
+            let y = world.track.trackCourse[i].y;
+
+            let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
+
+            elem.classList.add("road");
+            switch (world.track.trackCourse[i].turn) {
+                case "start":
+                    elem.classList.add("start");
+                    break;
+                case "end":
+                    elem.classList.remove("straight", "curve");
+                    elem.classList.add("end");
+                    break;
+                case "straight":
+                    elem.classList.add("straight");
+                    break;
+                case "curve":
+                    elem.classList.add("curve");
+                    break;
+                case "crossing":
+                    elem.classList.add("crossing");
+                    break;
+                case "tcrossing":
+                    elem.classList.add("tcrossing");
+                    break;
+                default:
+                    console.log("direction not found");
+                    break;
+
+            }
+            elem.setAttribute("style", `transform: rotate(${world.track.trackCourse[i].rotation}deg); `);
+            console.log("tset");
+        }
     }
 
+
     updateWorld() {
-        if(checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
+        if (checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
             alert("finished race");
-            location.reload();
+            location.reload(true);
         }
 
         world.car.getCarPos();
@@ -74,37 +83,27 @@ class World {
         let renderPosY = world.getRenderPosY(currentY, viewRadius)
         let renderPosX = world.getRenderPosX(currentX, viewRadius)
 
-        console.log(currentX, currentY);
-        console.log(renderPosX, renderPosY, "start", currentX + viewRadius, currentY + viewRadius, "end")
-
         for (let y = renderPosY; y <= currentY + viewRadius; y++) {
             for (let x = renderPosX; x <= currentX + viewRadius; x++) {
                 if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) {
                     break;
                 }
-                document.getElementsByClassName(`x${x} y${y}`)[0].classList.remove("invisible");
+                document.getElementsByClassName(`x${x} y${y} `)[0].classList.remove("invisible");
 
             }
         }
     }
 
-    resetRender() {
-        for (let i = document.getElementsByClassName("active").length - 1; i >= 0; i--) {
-            document.getElementsByClassName("active")[i].classList.remove("active");
-        }
-    }
-
-
     createWorld() {
         let parentDiv = document.createElement("div");
         parentDiv.classList.add("worldDiv");
-        parentDiv.setAttribute("style", `grid-template-columns: repeat(${this.worldSize}, auto);`);
+        parentDiv.setAttribute("style", `grid - template - columns: repeat(${this.worldSize}, auto); `);
         document.body.appendChild(parentDiv);
 
         for (let y = 0; y < this.worldSize; y++) {
             for (let x = 0; x < this.worldSize; x++) {
                 let areaDiv = document.createElement("div");
-                areaDiv.classList.add("x" + x, "y" + y, "areaDiv", "invisible");
+                areaDiv.classList.add("x" + x, "y" + y, "areaDiv");
                 areaDiv.setAttribute("style", `width: ${this.areaSize}px; height: ${this.areaSize}px`);
                 parentDiv.appendChild(areaDiv);
             }

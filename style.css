@@ -5,12 +5,6 @@
 .areaDiv {
     background-color: green;
     background-size: cover;
-    display: none;
-}
-
-.active {
-    display: block;
-    background-color: green;
 }
 
 .invisible {
@@ -35,6 +29,10 @@
 
 .crossing {
     background-image: url(./other/crossing.png);
+}
+
+.tcrossing {
+    background-image: url(./other/tcross.png);
 }
 
 .car {

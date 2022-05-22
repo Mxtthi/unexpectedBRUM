@@ -25,7 +25,7 @@ class Car extends World {
             if (checkIfElementsOverlap(car, element)) {
                 this.currentPosition.x = element.classList[0].substring(1);
                 this.currentPosition.y = element.classList[1].substring(1);
-                console.log(this.currentPosition, "carPos");
+                // console.log(this.currentPosition, "carPos");
             }
         }
     }
@@ -91,7 +91,7 @@ class Car extends World {
             multiplicator = 3;
         }
 
-        if (this.velocity >= -250 && this.velocity < 1000 || this.velocity <= -250 && value > 0 || this.velocity >= 1000 && value < 0) {
+        if (this.velocity >= -world.areaSize * 0.5 && this.velocity < world.areaSize * 4 || this.velocity <= -world.areaSize * 0.5 && value > 0 || this.velocity >= world.areaSize * 4 && value < 0) {
             this.velocity += value * multiplicator;
         }
         if (this.isDriving == false) {
