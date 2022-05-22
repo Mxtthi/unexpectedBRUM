@@ -18,7 +18,7 @@ class Track extends World {
         for (let i = 0; i <= this.trackLength; i++) {
 
             if (i == 0) {
-                this.setCoursePos(this.startPosX, this.startPosY, "up", 0, "start", "unknown");
+                this.setCoursePos(this.startPosX, this.startPosY, "up", 0, "start", ["left", "right", "up", "down"]);
             } else if (i == this.trackLength) {
                 this.trackCourse[this.currentPos - 1].turn = "end";
                 return;
@@ -65,7 +65,7 @@ class Track extends World {
             temp.rotation = obj.rotation, temp.facing = obj.facing;
         } else {
             temp.rotation = 0;
-            temp.facing = "unknown";
+            temp.facing = ["left", "right", "up", "down"];
         }
 
         console.log(temp);
@@ -187,22 +187,56 @@ class Track extends World {
 
     getCrossing(temp, pos) {
         let used = 0;
+        let connections = [];
         let dir = { "left": "right", "right": "left", "up": "down", "down": "up" };
         for (const key in pos) {
             const element = pos[key];
             if (element != false && element != undefined && key != "middle") {
                 if (element.facing.includes(dir[key])) {
                     used++;
+                    connections.push(key);
                 }
             }
         }
 
-        console.log(temp, used, this.trackCourse.length);
+        console.log(temp, used, connections, this.trackCourse.length);
 
         if (used >= 3) {
             temp.turn = "crossing";
-        } else if (used > 1) {
+        } else if (used == 2) {
+
             temp.turn = "tcrossing";
+            let nextDirection;
+            let possiblities = {
+                0: ["left", "right", "down"],
+                90: ["left", "up", "down"],
+                180: ["left", "right", "up"],
+                270: ["up", "right", "down"],
+            }
+            let possibleRotations = [];
+            let rot;
+
+            console.log(possiblities, "here 1")
+
+            for (const key in possiblities) {
+                if (possiblities[key].includes(connections[0]) && possiblities[key].includes(connections[1])) possibleRotations.push(key);
+            }
+
+            if (possibleRotations.length > 1 && getByChance(50, 50) == 1) {
+                rot = possibleRotations[1];
+            } else {
+                rot = possibleRotations[0];
+            }
+
+            temp.facing = possiblities[rot];
+            for (let i = 0; i < connections.length; i++) {
+                const index = possiblities[rot].indexOf(connections[i]);
+                possiblities[rot].splice(index, 1);
+            }
+            temp.rotation = parseInt(rot);
+            nextDirection = possiblities[rot][0];
+            console.log(nextDirection, temp.rotation, "oiofjadf")
+
         }
 
         return temp;
@@ -259,7 +293,14 @@ class Track extends World {
         obj.rotation = 0;
         obj.facing = [];
 
-        if (temp.turn == "straight") {
+
+        if (temp.turn == "crossing") {
+            temp.rotation = 0;
+            temp.facing = ["left", "right", "down", "up"];
+        } else if (temp.turn == "tcrossing") {
+            //do nothing so far
+            //set next direction
+        } else if (temp.turn == "straight") {
             if (temp.direction == "left" || temp.direction == "right") {
                 obj.rotation = 90;
                 obj.facing = ["left", "right"];
