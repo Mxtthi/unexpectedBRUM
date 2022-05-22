@@ -6,6 +6,10 @@ document.addEventListener("keydown",
             if (e.key == "w" || e.key == "s") {
                 world.car.accelerating = true;
             }
+            if (e.key == "Tab") {
+                e.preventDefault();
+                location.reload();
+            }
             keys.push(e.key);
         }
     },
