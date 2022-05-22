@@ -53,6 +53,14 @@ class World {
     }
 
     updateWorld() {
+<<<<<<< HEAD
+        if(checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
+            alert("finished race");
+            location.reload();
+        }
+
+=======
+>>>>>>> f0b2c892ef61a523756b4624290f67a4c45b6826
         world.car.getCarPos();
 
         let currentX;
@@ -120,5 +128,16 @@ class World {
                 return i;
             }
         }
+<<<<<<< HEAD
+    }
+
+    centerElem(elem) {
+        elem.scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center'
+        });
+=======
+>>>>>>> f0b2c892ef61a523756b4624290f67a4c45b6826
     }
 }

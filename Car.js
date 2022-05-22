@@ -30,6 +30,22 @@ class Car extends World {
             }
         }
 =======
+<<<<<<< HEAD
+>>>>>>> f0b2c892ef61a523756b4624290f67a4c45b6826
+    }
+
+    getCarPos() {
+        let elems = document.getElementsByClassName("areaDiv");
+        let car = document.getElementsByClassName("car")[0];
+        for (let i = 0; i < elems.length; i++) {
+            const element = elems[i];
+            if (checkIfElementsOverlap(car, element)) {
+                this.currentPosition.x = element.classList[0].substring(1);
+                this.currentPosition.y = element.classList[1].substring(1);
+                console.log(this.currentPosition, "carPos");
+            }
+        }
+=======
 >>>>>>> bb5310c018a2c77fbc472d1804e77432867b9714
     }
 
@@ -171,12 +187,16 @@ class Car extends World {
 <<<<<<< HEAD
         world.centerElem(document.getElementsByClassName("car")[0]);
 =======
+<<<<<<< HEAD
+        world.centerElem(document.getElementsByClassName("car")[0]);
+=======
         car.scrollIntoView({
             behavior: "smooth",
             block: "center",
             inline: "center",
         });
 >>>>>>> bb5310c018a2c77fbc472d1804e77432867b9714
+>>>>>>> f0b2c892ef61a523756b4624290f67a4c45b6826
     }
 
 

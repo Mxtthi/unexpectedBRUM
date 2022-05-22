@@ -28,10 +28,10 @@ setInterval(() => {
     for (let i = 0; i < keys.length; i++) {
         switch (keys[i].toLowerCase()) {
             case "w":
-                world.car.changeVelocity(1.5);
+                world.car.changeVelocity(0.01 * world.areaSize);
                 break;
             case "s":
-                world.car.changeVelocity(-1.5);
+                world.car.changeVelocity(-0.01 * world.areaSize);
                 break;
             case "a":
                 world.car.changeRotation(-2.5);

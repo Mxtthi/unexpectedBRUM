@@ -41,8 +41,12 @@
 <<<<<<< HEAD
     position: absolute;
 =======
+<<<<<<< HEAD
+    position: absolute;
+=======
     background-image: url(./other/car.png);
     background-size: cover;
     position: fixed;
 >>>>>>> bb5310c018a2c77fbc472d1804e77432867b9714
+>>>>>>> f0b2c892ef61a523756b4624290f67a4c45b6826
 }
