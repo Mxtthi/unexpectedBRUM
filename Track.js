@@ -41,6 +41,24 @@ class Track extends World {
         this.currentPos++;
     }
 
+    createAreaArray(trackCourse) {
+        let temp = Array.from(Array(worldSize), () => new Array(worldSize));
+        for (let i = 0; i < trackCourse.length; i++) {
+            const element = trackCourse[i];
+            console.log(element);
+            temp[element.y][element.x] = {
+                x: element.x,
+                y: element.y,
+                direction: element.direction,
+                rotation: element.rotation,
+                turn: element.turn,
+                facing: element.facing,
+                nextDirection: element.nextDirection
+            };
+        }
+        return temp;
+    }
+
     getNextPos() {
         let temp;
         let isBlocked = false;
@@ -89,7 +107,6 @@ class Track extends World {
         if (this.trackCourse[this.currentPos - 1].turn == "curve") {
             chanceTurn -= 5;
         }
-        console.log(chanceTurn)
         return chanceTurn;
     }
 

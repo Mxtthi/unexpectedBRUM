@@ -7,6 +7,8 @@ class World {
 
     loadWorld() {
 
+        console.log(world.track.trackCourse);
+
         for (let y = 0; y < world.worldSize; y++) {
             for (let x = 0; x < world.worldSize; x++) {
                 if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) {
@@ -58,6 +60,26 @@ class World {
             elem.setAttribute("style", `transform: rotate(${world.track.trackCourse[i].rotation}deg); `);
             let eledjafl = 1;
         }
+    }
+
+    sendButtonPressed() {
+        let data = { "track": world.track.trackCourse };
+        world.sendData(data);
+    }
+
+    loadButtonPressed() {
+        let data = { "code": document.getElementById("codeInput").value };
+        world.sendData(data);
+    }
+
+    sendData(dataToBeSent) {
+        $("#result").innerHTML = "";
+        $.post("db.php", dataToBeSent, function (data) {
+            // Display the returned data in browser
+
+            $("#result").html(data);
+        });
+        console.log("data sent");
     }
 
 
