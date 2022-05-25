@@ -7,7 +7,6 @@ if (isset($_POST["code"])) {
     $trackCode = $_POST["code"];
     $error = "";
 
-
     $sql = "SELECT * FROM tracks WHERE trackCode = ?";
     $stmt = $db->prepare($sql);
     $stmt->execute([$trackCode]);
@@ -26,7 +25,6 @@ if (isset($_POST["code"])) {
 }
 
 if (isset($_POST["track"]) && isset($_SESSION["auth"])) {
-
     $track = json_encode($_POST["track"]);
     $userID = $_SESSION["id"];
     $trackCode;

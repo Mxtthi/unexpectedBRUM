@@ -5,6 +5,7 @@ if (trackCourse != 0 && typeof trackCourse !== undefined) {
     world.track.area = world.track.createAreaArray(world.track.trackCourse);
 }
 console.log(world.track.trackCourse);
+console.log(world.track.trackCourse[world.track.trackCourse.length - 1], "was geeeht");
 console.log(world.track.area, "hei");
 world.loadWorld();
 world.car = new Car(world.areaSize, world.worldSize);

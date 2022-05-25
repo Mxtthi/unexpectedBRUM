@@ -45,7 +45,6 @@ class Track extends World {
         let temp = Array.from(Array(worldSize), () => new Array(worldSize));
         for (let i = 0; i < trackCourse.length; i++) {
             const element = trackCourse[i];
-            console.log(element);
             temp[element.y][element.x] = {
                 x: element.x,
                 y: element.y,

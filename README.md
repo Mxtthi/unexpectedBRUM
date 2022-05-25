@@ -10,4 +10,3 @@ car game
 - change the way acceleration/breaking works -> percentage
 
 somehow end-part is often missing -> error
-<y>

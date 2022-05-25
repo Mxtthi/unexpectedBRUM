@@ -64,6 +64,7 @@ class World {
 
     sendButtonPressed() {
         let data = { "track": world.track.trackCourse };
+        console.log(data.track.length);
         world.sendData(data);
     }
 
