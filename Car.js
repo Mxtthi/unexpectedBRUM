@@ -94,7 +94,7 @@ class Car extends World {
             this.velocity += value * multiplicator;
         }
         if (this.isDriving == false) {
-            let moveCarInterval = setInterval(() => this.moveCar(), 10);
+            let moveCarInterval = setInterval(() => this.moveCar(), 15);
             this.isDriving = true;
         }
         console.log(this.velocity);
@@ -106,7 +106,7 @@ class Car extends World {
             this.rotation = 0;
         }
         if (this.isDriving == false) {
-            let moveCarInterval = setInterval(() => this.moveCar(), 10);
+            let moveCarInterval = setInterval(() => this.moveCar(), 15);
             this.isDriving = true;
         }
     }
