@@ -71,7 +71,6 @@ class Car extends World {
         this.getCarPos();
         let start = document.getElementsByClassName("start")[0];
         let startPos = this.getPos(start);
-        console.log(start);
         start.scrollIntoView({
             behavior: "smooth",
             block: "center",
@@ -97,7 +96,7 @@ class Car extends World {
             let moveCarInterval = setInterval(() => this.moveCar(), 15);
             this.isDriving = true;
         }
-        console.log(this.velocity);
+        // console.log(this.velocity);
     }
 
     changeRotation(value) {
@@ -118,6 +117,7 @@ class Car extends World {
         for (let i = 0; i < road.length; i++) {
             if (checkIfElementsOverlap(car, road[i])) {
                 onRoad = true;
+                world.drivenOn[i] = true;
                 break;
             }
         }

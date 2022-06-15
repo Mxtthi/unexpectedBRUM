@@ -2,27 +2,21 @@ class World {
     constructor(areaSize, worldSize) {
         this.areaSize = areaSize;
         this.worldSize = worldSize;
+        this.drivenOn = [];
         this.gameStatus = true;
     }
 
     loadWorld() {
-
-        console.log(world.track.trackCourse);
-
         for (let y = 0; y < world.worldSize; y++) {
             for (let x = 0; x < world.worldSize; x++) {
                 if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) {
                     break;
                 }
-
                 let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
-
-
                 elem.classList.add("invisible");
             }
         }
         document.getElementsByClassName("worldDiv")[0].setAttribute("style", `grid-template-columns: repeat(${world.worldSize}, auto); `);
-
 
         for (let i = 0; i < world.track.trackCourse.length; i++) {
 
@@ -58,7 +52,6 @@ class World {
 
             }
             elem.setAttribute("style", `transform: rotate(${world.track.trackCourse[i].rotation}deg); `);
-            let eledjafl = 1;
         }
     }
 
@@ -83,10 +76,22 @@ class World {
         console.log("data sent");
     }
 
+    getRoadsDrivenOn(arr) {
+        let temp = 0;
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] == true) temp++;
+        }
+        console.log(temp, world.track.trackLength);
+        return temp / world.track.trackLength * 100;
+    }
+
 
     updateWorld() {
         if (checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
+            world.drivenOn[world.track.trackLength - 1] = true;
+            console.log(world.getRoadsDrivenOn(world.drivenOn), world.drivenOn)
             alert("finished race");
+
             location.reload(true);
         }
 

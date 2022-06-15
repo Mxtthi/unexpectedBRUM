@@ -13,7 +13,6 @@ class Track extends World {
     getTrackCourse() {
         this.trackCourse = [];
         this.area = Array.from(Array(worldSize), () => new Array(worldSize));
-        console.log(this.area, 0 in this.area[0]);
 
         for (let i = 0; i <= this.trackLength; i++) {
 
@@ -59,9 +58,7 @@ class Track extends World {
     }
 
     getNextPos() {
-        let temp;
-        let isBlocked = false;
-        let counter = 0;
+        let temp, isBlocked = false, counter = 0;
 
         do {
             temp = this.getDirection();
@@ -110,9 +107,7 @@ class Track extends World {
     }
 
     getDirection() {
-        let temp = {};
-        let direction;
-        let lastArea = this.trackCourse[this.currentPos - 1];
+        let temp = {}, direction, lastArea = this.trackCourse[this.currentPos - 1];
 
         if (lastArea.turn == "start") {
             direction = getRandomInt(1, 4);
@@ -209,9 +204,7 @@ class Track extends World {
     }
 
     getCrossing(temp, pos) {
-        let used = 0;
-        let connections = [];
-        let dir = { "left": "right", "right": "left", "up": "down", "down": "up" };
+        let used = 0, connections = [], dir = { "left": "right", "right": "left", "up": "down", "down": "up" };
         for (const key in pos) {
             const element = pos[key];
             if (element != false && element != undefined && key != "middle") {
@@ -243,7 +236,6 @@ class Track extends World {
         } else if (used == 2) {
 
             temp.turn = "tcrossing";
-            let nextDirection;
             let possiblities = {
                 0: ["left", "right", "down"],
                 90: ["left", "up", "down"],
