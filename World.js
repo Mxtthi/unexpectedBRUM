@@ -7,15 +7,7 @@ class World {
     }
 
     loadWorld() {
-        for (let y = 0; y < world.worldSize; y++) {
-            for (let x = 0; x < world.worldSize; x++) {
-                if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) {
-                    break;
-                }
-                let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
-                elem.classList.add("invisible");
-            }
-        }
+        world.hideAll();
         document.getElementsByClassName("worldDiv")[0].setAttribute("style", `grid-template-columns: repeat(${world.worldSize}, auto); `);
 
         for (let i = 0; i < world.track.trackCourse.length; i++) {
@@ -149,6 +141,18 @@ class World {
         });
     }
 
+    hideAll() {
+        for (let y = 0; y < world.worldSize; y++) {
+            for (let x = 0; x < world.worldSize; x++) {
+                if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) {
+                    break;
+                }
+                let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
+                elem.classList.add("invisible");
+            }
+        }
+    }
+
     collapsible() {
         let coll = document.getElementsByClassName("collapsible");
         let i;
@@ -189,6 +193,7 @@ class World {
 
         document.getElementById("ViewRadiusOutput").innerHTML = document.getElementById("ViewRadiusSlider").value + " parts"
         document.getElementById("ViewRadiusSlider").oninput = function () {
+            if (this.value < viewRadius) world.hideAll();
             viewRadius = this.value;
             document.getElementById("ViewRadiusOutput").innerHTML = this.value + " parts";
         };
