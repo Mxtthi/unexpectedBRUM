@@ -20,12 +20,14 @@ class Track extends World {
                 this.setCoursePos(this.startPosX, this.startPosY, "up", 0, "start", ["left", "right", "up", "down"], []);
             } else if (i == this.trackLength) {
                 this.trackCourse[this.currentPos - 1].turn = "end";
+                this.trackCourse[this.currentPos - 1].rotation = 0;
                 return;
             }
             else {
                 let nextPos = this.getNextPos();
                 if (nextPos == false) {
                     this.trackCourse[this.currentPos - 1].turn = "end";
+                    this.trackCourse[this.currentPos - 1].rotation = 0;
                     return;
                 } else {
                     this.setCoursePos(nextPos.x, nextPos.y, nextPos.direction, nextPos.rotation, nextPos.turn, nextPos.facing, nextPos.nextDirection);

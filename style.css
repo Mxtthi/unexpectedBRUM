@@ -16,7 +16,7 @@ body {
 }
 
 .areaDiv {
-    background-color: green;
+    background-image: url(./other/grass.png);
     background-size: cover;
 }
 
@@ -25,27 +25,27 @@ body {
 }
 
 .start {
-    background-color: black !important;
+    background-image: url(./other/start.png) !important;
 }
 
 .end {
-    background-color: black !important;
+    background-image: url(./other/end.png) !important;
 }
 
 .straight {
-    background-image: url(./other/straight.png);
+    background-image: url(./other/straight.png) !important;
 }
 
 .curve {
-    background-image: url(./other/curve.png);
+    background-image: url(./other/curve.png) !important;
 }
 
 .crossing {
-    background-image: url(./other/crossing.png);
+    background-image: url(./other/crossing.png) !important;
 }
 
 .tcrossing {
-    background-image: url(./other/tcross.png);
+    background-image: url(./other/tcross.png) !important;
 }
 
 .car {
@@ -133,4 +133,82 @@ body {
     height: 25px;
     background: #04AA6D;
     cursor: pointer;
+}
+
+/* background variations */
+
+.var1 {
+    background-image: url(./other/var1.png);
+}
+
+.var2 {
+    background-image: url(./other/var2.png);
+}
+
+.var3 {
+    background-image: url(./other/var3.png);
+}
+
+.var4 {
+    background-image: url(./other/var4.png);
+}
+
+.var5 {
+    background-image: url(./other/var5.png);
+}
+
+.var6 {
+    background-image: url(./other/var6.png);
+}
+
+.var7 {
+    background-image: url(./other/var7.png);
+}
+
+.var8 {
+    background-image: url(./other/var8.png);
+}
+
+.var9 {
+    background-image: url(./other/var9.png);
+}
+
+.var10 {
+    background-image: url(./other/var10.png);
+}
+
+.var11 {
+    background-image: url(./other/var11.png);
+}
+
+.var12 {
+    background-image: url(./other/var12.png);
+}
+
+.var13 {
+    background-image: url(./other/var13.png);
+}
+
+.var14 {
+    background-image: url(./other/var14.png);
+}
+
+.var15 {
+    background-image: url(./other/var15.png);
+}
+
+.var16 {
+    background-image: url(./other/var16.png);
+}
+
+.var17 {
+    background-image: url(./other/var17.png);
+}
+
+.var18 {
+    background-image: url(./other/var18.png);
+}
+
+.var19 {
+    background-image: url(./other/var19.png);
 }

@@ -114,7 +114,9 @@ class World {
         for (let y = 0; y < this.worldSize; y++) {
             for (let x = 0; x < this.worldSize; x++) {
                 let areaDiv = document.createElement("div");
-                areaDiv.classList.add("x" + x, "y" + y, "areaDiv");
+                let rndm = getRandomInt(6, 50);
+                if (rndm >= 20) rndm = getRandomInt(1, 50);
+                areaDiv.classList.add("x" + x, "y" + y, "areaDiv", "var" + rndm);
                 areaDiv.setAttribute("style", `width: ${this.areaSize}px; height: ${this.areaSize}px`);
                 parentDiv.appendChild(areaDiv);
             }
