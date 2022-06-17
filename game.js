@@ -6,10 +6,7 @@ if (trackCourse != 0 && typeof trackCourse !== undefined) {
 }
 world.loadWorld();
 world.car = new Car(world.areaSize, world.worldSize);
-let start = world.car.getPos(document.getElementsByClassName("start")[0])
-world.car.setCarPos(start.left, start.top);
-world.car.scrollToCar();
-world.updateWorld();
+world.car.positionCar();
 let updateWorld = setInterval(world.updateWorld, 100);
 document.getElementById("getCode").addEventListener("click", world.sendButtonPressed);
 document.getElementById("setCode").addEventListener("click", world.loadButtonPressed);

@@ -6,7 +6,12 @@ class Car extends World {
 
         this.createCar();
         this.spawnCar();
+    }
 
+    positionCar() {
+        let start = world.car.getPos(document.getElementsByClassName("start")[0])
+        world.car.setCarPos(start.left, start.top);
+        world.car.scrollToCar();
     }
 
     getPos(elem) {
@@ -84,25 +89,33 @@ class Car extends World {
     }
 
     changeVelocity(value) {
+        value *= 0.01 * world.areaSize;
         let multiplicator = 1;
         if (this.velocity < 0 && value > 0 || this.velocity > 0 && value < 0) {
             multiplicator = 3;
         }
-
-        if (this.velocity >= -world.areaSize * 0.5 && this.velocity < world.areaSize * 4 || this.velocity <= -world.areaSize * 0.5 && value > 0 || this.velocity >= world.areaSize * 4 && value < 0) {
+        if (value < 0) {
+            if (this.velocity < world.areaSize * 1) {
+                value *= 0.5;
+            } else {
+                value *= 3
+            }
+        }
+        if (this.velocity >= -world.areaSize * 0.5 && this.velocity < world.areaSize * 10 || this.velocity <= -world.areaSize * 0.5 && value > 0 || this.velocity >= world.areaSize * 10 && value < 0) {
             this.velocity += value * multiplicator;
         }
         if (this.isDriving == false) {
             let moveCarInterval = setInterval(() => this.moveCar(), 15);
             this.isDriving = true;
         }
-        // console.log(this.velocity);
     }
 
     changeRotation(value) {
-        this.rotation += value;
-        if (this.rotation >= 360 || this.rotation <= -360) {
-            this.rotation = 0;
+        if (this.velocity > world.areaSize * 0.03 || this.velocity < -world.areaSize * 0.03) {
+            this.rotation += value;
+            if (this.rotation >= 360 || this.rotation <= -360) {
+                this.rotation = 0;
+            }
         }
         if (this.isDriving == false) {
             let moveCarInterval = setInterval(() => this.moveCar(), 15);

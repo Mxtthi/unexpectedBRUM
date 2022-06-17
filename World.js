@@ -19,10 +19,8 @@ class World {
         document.getElementsByClassName("worldDiv")[0].setAttribute("style", `grid-template-columns: repeat(${world.worldSize}, auto); `);
 
         for (let i = 0; i < world.track.trackCourse.length; i++) {
-
             let x = world.track.trackCourse[i].x;
             let y = world.track.trackCourse[i].y;
-
             let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
 
             elem.classList.add("road");
@@ -81,24 +79,20 @@ class World {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i] == true) temp++;
         }
-        console.log(temp, world.track.trackLength);
         return temp / world.track.trackLength * 100;
     }
 
 
     updateWorld() {
+        let currentX, currentY, renderPosX, renderPosY;
         if (checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
             world.drivenOn[world.track.trackLength - 1] = true;
             console.log(world.getRoadsDrivenOn(world.drivenOn), world.drivenOn)
             alert("finished race");
-
             location.reload(true);
         }
 
         world.car.getCarPos();
-
-        let currentX;
-        let currentY;
 
         if (world.car !== undefined) {
             currentX = parseInt(world.car.currentPosition.x);
@@ -108,16 +102,13 @@ class World {
             currentY = world.track.trackCourse[0].y;
         }
 
-        let renderPosY = world.getRenderPosY(currentY, viewRadius)
-        let renderPosX = world.getRenderPosX(currentX, viewRadius)
+        renderPosY = world.getRenderPosY(currentY, viewRadius)
+        renderPosX = world.getRenderPosX(currentX, viewRadius)
 
         for (let y = renderPosY; y <= currentY + viewRadius; y++) {
             for (let x = renderPosX; x <= currentX + viewRadius; x++) {
-                if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) {
-                    break;
-                }
+                if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) break;
                 document.getElementsByClassName(`x${x} y${y} `)[0].classList.remove("invisible");
-
             }
         }
     }
@@ -131,7 +122,6 @@ class World {
         for (let y = 0; y < this.worldSize; y++) {
             for (let x = 0; x < this.worldSize; x++) {
                 let areaDiv = document.createElement("div");
-                // areaDiv.classList.add("x" + x, "y" + y, "areaDiv", "invisible");
                 areaDiv.classList.add("x" + x, "y" + y, "areaDiv");
                 areaDiv.setAttribute("style", `width: ${this.areaSize}px; height: ${this.areaSize}px`);
                 parentDiv.appendChild(areaDiv);
@@ -141,17 +131,13 @@ class World {
 
     getRenderPosX(currentX, viewRadius) {
         for (let i = currentX - viewRadius; i <= currentX; i++) {
-            if (i >= 0) {
-                return i;
-            }
+            if (i >= 0) return i;
         }
     }
 
     getRenderPosY(currentY, viewRadius) {
         for (let i = currentY - viewRadius; i <= currentY; i++) {
-            if (i >= 0) {
-                return i;
-            }
+            if (i >= 0) return i;
         }
     }
 

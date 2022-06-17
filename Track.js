@@ -92,17 +92,11 @@ class Track extends World {
                 break;
             }
             i
-            if (this.trackCourse[this.currentPos - i].turn == "straight") {
-                chanceTurn += 5;
-            }
+            if (this.trackCourse[this.currentPos - i].turn == "straight") chanceTurn += 5;
             i++;
-            if (i > 5) {
-                chanceTurn += 15;
-            }
+            if (i > 5) chanceTurn += 15;
         }
-        if (this.trackCourse[this.currentPos - 1].turn == "curve") {
-            chanceTurn -= 5;
-        }
+        if (this.trackCourse[this.currentPos - 1].turn == "curve") chanceTurn -= 5;
         return chanceTurn;
     }
 
