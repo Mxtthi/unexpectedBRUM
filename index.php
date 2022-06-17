@@ -45,11 +45,37 @@
     </script>
 
     <div id="codeDiv">
-        <input type="submit" id="getCode" name="getCode" value="Create Code">
-        <input type="submit" id="setCode" name="setCode" value="Load Code">
-        <div id="result">
-            <input type="text" id="codeInput" name="codeInput" placeholder="4F35">
+        <button class="collapsible active">Options</button>
+        <div class="content">
+            <div>
+                <div><label for="trackLengthSlider">Track-Length:</label><br>
+                    <input id="trackLengthSlider" type="range" min="1" max="500" value="25">
+                    <span id="trackLengthOutput"></span>
+                </div>
+                <div><label for="worldSizeSlider">World-Size:</label><br>
+                    <input id="worldSizeSlider" type="range" min="5" max="100" value="25">
+                    <span id="worldSizeOutput"></span>
+                </div>
+                <div><label for="ViewRadiusSlider">Viewradius:</label><br>
+                    <input id="ViewRadiusSlider" type="range" min="1" max="100" value="2">
+                    <span id="ViewRadiusOutput"></span>
+                </div>
+                <div><label for="areaSizeSlider">Area-Size:</label><br>
+                    <input id="areaSizeSlider" type="range" min="1" max="100" value="100">
+                    <span id="areaSizeOutput"></span>
+                </div>
+            </div>
+            <div>
+                <input type="submit" id="getCode" name="getCode" value="Create Code">
+                <input type="submit" id="setCode" name="setCode" value="Load Code">
+                <div id="result">
+                    <input type="text" id="codeInput" name="codeInput" placeholder="4F35">
+                </div>
+            </div>
         </div>
+
+
+
     </div>
 
     <script type="text/javascript" src="functions.js"></script>

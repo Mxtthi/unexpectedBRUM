@@ -148,4 +148,54 @@ class World {
             inline: 'center'
         });
     }
+
+    collapsible() {
+        let coll = document.getElementsByClassName("collapsible");
+        let i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                console.log(this.nextElementSibling);
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        }
+    }
+
+    addListeners() {
+        document.getElementById("getCode").addEventListener("click", world.sendButtonPressed);
+        document.getElementById("setCode").addEventListener("click", world.loadButtonPressed);
+        world.collapsible();
+
+        document.getElementById("trackLengthOutput").innerHTML = document.getElementById("trackLengthSlider").value + " parts"
+        document.getElementById("trackLengthSlider").oninput = function () {
+            if (this.value > 1) {
+                document.getElementById("trackLengthOutput").innerHTML = this.value + " parts";
+            } else {
+                document.getElementById("trackLengthOutput").innerHTML = this.value + " part";
+            }
+        };
+
+        document.getElementById("worldSizeOutput").innerHTML = document.getElementById("worldSizeSlider").value + " parts"
+        document.getElementById("worldSizeSlider").oninput = function () {
+            document.getElementById("worldSizeOutput").innerHTML = this.value + " parts";
+        };
+
+        document.getElementById("ViewRadiusOutput").innerHTML = document.getElementById("ViewRadiusSlider").value + " parts"
+        document.getElementById("ViewRadiusSlider").oninput = function () {
+            viewRadius = this.value;
+            document.getElementById("ViewRadiusOutput").innerHTML = this.value + " parts";
+        };
+
+        document.getElementById("areaSizeOutput").innerHTML = document.getElementById("areaSizeSlider").value + "%"
+        document.getElementById("areaSizeSlider").oninput = function () {
+            document.getElementById("areaSizeOutput").innerHTML = this.value + "%";
+        };
+    }
 }
