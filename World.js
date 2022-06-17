@@ -177,30 +177,34 @@ class World {
         document.getElementById("setCode").addEventListener("click", world.loadButtonPressed);
         world.collapsible();
 
-        document.getElementById("trackLengthOutput").innerHTML = document.getElementById("trackLengthSlider").value + " parts"
+        document.getElementById("trackLengthOutput").innerHTML = document.getElementById("trackLengthSlider").value + " parts";
         document.getElementById("trackLengthSlider").oninput = function () {
             if (this.value > 1) {
                 document.getElementById("trackLengthOutput").innerHTML = this.value + " parts";
             } else {
                 document.getElementById("trackLengthOutput").innerHTML = this.value + " part";
             }
+            sessionStorage.setItem("trackLength", this.value);
         };
 
-        document.getElementById("worldSizeOutput").innerHTML = document.getElementById("worldSizeSlider").value + " parts"
+        document.getElementById("worldSizeOutput").innerHTML = document.getElementById("worldSizeSlider").value + " parts";
         document.getElementById("worldSizeSlider").oninput = function () {
             document.getElementById("worldSizeOutput").innerHTML = this.value + " parts";
+            sessionStorage.setItem("worldSize", this.value);
         };
 
-        document.getElementById("ViewRadiusOutput").innerHTML = document.getElementById("ViewRadiusSlider").value + " parts"
+        document.getElementById("ViewRadiusOutput").innerHTML = document.getElementById("ViewRadiusSlider").value + " parts";
         document.getElementById("ViewRadiusSlider").oninput = function () {
             if (this.value < viewRadius) world.hideAll();
             viewRadius = this.value;
             document.getElementById("ViewRadiusOutput").innerHTML = this.value + " parts";
+            sessionStorage.setItem("ViewRadius", this.value);
         };
 
-        document.getElementById("areaSizeOutput").innerHTML = document.getElementById("areaSizeSlider").value + "%"
+        document.getElementById("areaSizeOutput").innerHTML = document.getElementById("areaSizeSlider").value + "%";
         document.getElementById("areaSizeSlider").oninput = function () {
             document.getElementById("areaSizeOutput").innerHTML = this.value + "%";
+            sessionStorage.setItem("areaSize", this.value);
         };
     }
 }

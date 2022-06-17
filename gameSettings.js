@@ -1,3 +1,4 @@
+loadSessionStorage();
 let worldSize = parseInt(document.getElementById("worldSizeSlider").value);
 let viewRadius = document.getElementById("ViewRadiusSlider").value;
 let trackLength = document.getElementById("trackLengthSlider").value;

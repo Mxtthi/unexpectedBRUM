@@ -18,3 +18,10 @@ function checkIfElementsOverlap(elem1, elem2) {
 
     return !(pos1.top > pos2.bottom || pos1.right < pos2.left || pos1.bottom < pos2.top || pos1.left > pos2.right);
 }
+
+function loadSessionStorage() {
+    if (sessionStorage.getItem("trackLength")) document.getElementById("trackLengthSlider").value = sessionStorage.getItem("trackLength");
+    if (sessionStorage.getItem("worldSize")) document.getElementById("worldSizeSlider").value = sessionStorage.getItem("worldSize");
+    if (sessionStorage.getItem("ViewRadius")) document.getElementById("ViewRadiusSlider").value = sessionStorage.getItem("ViewRadius");
+    if (sessionStorage.getItem("areaSize")) document.getElementById("areaSizeSlider").value = sessionStorage.getItem("areaSize");
+}
