@@ -4,6 +4,32 @@ class World {
         this.worldSize = worldSize;
         this.drivenOn = [];
         this.gameStatus = true;
+        this.collectedCoins = 0;
+
+        this.coinSound = new Audio('./other/coin.mp3');
+    }
+
+    spawnCoinAt(posX, posY) {
+        let coin = document.createElement("img");
+        coin.src = "./other/coin.png";
+        coin.classList.add("coin");
+        coin.style.left = posX + "px";
+        coin.style.top = posY + "px";
+        coin.style.height = world.areaSize / 10 + "px";
+        document.body.appendChild(coin);
+    }
+
+    checkIfCollectedCoin() {
+        for (let i = 0; i < document.getElementsByClassName("coin").length; i++) {
+            const element = document.getElementsByClassName("coin")[i];
+            if (checkIfElementsOverlap(document.getElementsByClassName("car")[0], element)) {
+                element.remove();
+                world.collectedCoins++;
+                let clone = world.coinSound.cloneNode(true);
+                clone.volume = 0.1;
+                clone.play();
+            }
+        }
     }
 
     loadWorld() {
@@ -15,6 +41,11 @@ class World {
             let y = world.track.trackCourse[i].y;
             let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
 
+
+            if (getRandomInt(0, 5) == 0 && world.track.trackCourse[i].turn != "start" && world.track.trackCourse[i].turn != "end") {
+                let pos = elem.getBoundingClientRect();
+                world.spawnCoinAt(pos.left + world.areaSize / getRandomInt(2, 4), pos.top + world.areaSize / getRandomInt(2, 4));
+            }
             elem.classList.add("road");
             switch (world.track.trackCourse[i].turn) {
                 case "start":
@@ -80,10 +111,14 @@ class World {
         if (checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
             world.drivenOn[world.track.trackLength - 1] = true;
             console.log(world.getRoadsDrivenOn(world.drivenOn), world.drivenOn)
+            world.car.idleSound.pause();
+            world.car.drivingSound.pause();
+            world.car.brakingSound.pause();
             alert("finished race");
             location.reload(true);
         }
 
+        world.checkIfCollectedCoin();
         world.car.getCarPos();
 
         if (world.car !== undefined) {

@@ -19,6 +19,8 @@ document.addEventListener("keyup",
     function (e) {
         if (e.key == "w" || e.key == "s") {
             world.car.accelerating = false;
+            world.car.pauseAudio(world.car.drivingSound);
+            if (e.key == "s") world.car.pauseAudio(world.car.brakingSound);
         }
         keys = keys.filter(t => t !== e.key);
     },

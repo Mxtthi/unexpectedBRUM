@@ -3,9 +3,27 @@ class Car extends World {
         super(areaSize, worldSize);
         this.height = Math.round(this.areaSize * 0.15);
         this.currentPosition = { x: 0, y: 0 };
+        this.drivingSound = new Audio('./other/driving.mp3');
+        this.brakingSound = new Audio('./other/brake.mp3');
+        this.idleSound = new Audio('./other/idle.mp3');
+        this.velocity = 0;
+        this.accelerating = false;
+        this.isDriving = false;
+
+        this.drivingSound.volume = 0.1;
+        this.brakingSound.volume = 0.1;
+        this.idleSound.volume = 0.3;
 
         this.createCar();
         this.spawnCar();
+    }
+
+    resumeAudio(audio) {
+        audio.play();
+    }
+
+    pauseAudio(audio) {
+        audio.pause();
     }
 
     positionCar() {
@@ -41,9 +59,6 @@ class Car extends World {
     }
 
     createCar() {
-        this.velocity = 0;
-        this.accelerating = false;
-        this.isDriving = false;
         switch (world.track.trackCourse[1].direction) {
             case "up":
                 this.rotation = 0;
@@ -82,7 +97,7 @@ class Car extends World {
             inline: "center",
         });
 
-        let car = document.getElementsByClassName("car")[0]
+        let car = document.getElementsByClassName("car")[0];
         startPos = this.getPos(document.getElementsByClassName("start")[0]);
         car.style.left = startPos.left + "px";
         car.style.top = startPos.top + "px";
@@ -99,7 +114,10 @@ class Car extends World {
                 value *= 0.5;
             } else {
                 value *= 3
+                this.resumeAudio(this.brakingSound);
             }
+        } else {
+            this.resumeAudio(this.drivingSound);
         }
         if (this.velocity >= -world.areaSize * 0.5 && this.velocity < world.areaSize * 10 || this.velocity <= -world.areaSize * 0.5 && value > 0 || this.velocity >= world.areaSize * 10 && value < 0) {
             this.velocity += value * multiplicator;
@@ -171,6 +189,7 @@ class Car extends World {
         car.style.transform = `rotate(${this.rotation}deg)`;
 
         world.centerElem(document.getElementsByClassName("car")[0]);
+        if (this.velocity > areaSize / 10 || this.velocity < -areaSize / 10) this.resumeAudio(this.idleSound);
     }
 
 

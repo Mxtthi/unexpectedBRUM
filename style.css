@@ -9,6 +9,11 @@ body {
     z-index: 100;
 }
 
+.coin {
+    position: absolute;
+    z-index: 1;
+}
+
 .worldDiv {
     display: grid;
     max-width: max-content;
@@ -50,6 +55,7 @@ body {
 
 .car {
     position: absolute;
+    z-index: 10;
 }
 
 .unselectable {
