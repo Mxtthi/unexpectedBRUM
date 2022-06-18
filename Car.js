@@ -26,17 +26,20 @@ class Car extends World {
         audio.pause();
     }
 
-    positionCar() {
-        let start = world.car.getPos(document.getElementsByClassName("start")[0])
-        world.car.setCarPos(start.left, start.top);
-        world.car.scrollToCar();
+    moveCarToElem(elem) {
+        window.scrollTo(0, 0);
+        let pos = world.car.getPos(elem);
+        world.car.getCarPos();
+        world.centerElem(elem);
+        document.getElementsByClassName("car")[0].style.left = pos.left + "px";
+        document.getElementsByClassName("car")[0].style.top = pos.top + "px";
     }
 
     getPos(elem) {
         let temp = {};
         let pos = elem.getBoundingClientRect();
-        temp.left = pos.left + this.areaSize / 2;
-        temp.top = pos.top + this.areaSize / 2;
+        temp.left = pos.left + areaSize / 2;
+        temp.top = pos.top + areaSize / 2;
         return temp;
     }
 
@@ -46,8 +49,8 @@ class Car extends World {
         for (let i = 0; i < elems.length; i++) {
             const element = elems[i];
             if (checkIfElementsOverlap(car, element)) {
-                this.currentPosition.x = element.classList[0].substring(1);
-                this.currentPosition.y = element.classList[1].substring(1);
+                world.car.currentPosition.x = element.classList[0].substring(1);
+                world.car.currentPosition.y = element.classList[1].substring(1);
             }
         }
     }
@@ -85,22 +88,6 @@ class Car extends World {
         elem.style.transform = `rotate(${this.rotation}deg)`;
         elem.src = "other/car.png";
         document.body.appendChild(elem);
-    }
-
-    scrollToCar() {
-        this.getCarPos();
-        let start = document.getElementsByClassName("start")[0];
-        let startPos = this.getPos(start);
-        start.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-            inline: "center",
-        });
-
-        let car = document.getElementsByClassName("car")[0];
-        startPos = this.getPos(document.getElementsByClassName("start")[0]);
-        car.style.left = startPos.left + "px";
-        car.style.top = startPos.top + "px";
     }
 
     changeVelocity(value) {

@@ -181,13 +181,34 @@ class World {
     hideAll() {
         for (let y = 0; y < world.worldSize; y++) {
             for (let x = 0; x < world.worldSize; x++) {
-                if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) {
-                    break;
-                }
+                if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) break;
                 let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
                 elem.classList.add("invisible");
             }
         }
+    }
+
+    test() {
+        return document.getElementsByClassName("car")[0].getBoundingClientRect();
+    }
+
+    testxy(x, y) {
+        console.log(document.getElementsByClassName(`x${x} y${y}`)[0].getBoundingClientRect());
+    }
+
+    changeAreaSize(newSize) {
+        let currentTile = world.car.currentPosition;
+        console.log(currentTile);
+        for (let y = 0; y < world.worldSize; y++) {
+            for (let x = 0; x < world.worldSize; x++) {
+                if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) break;
+                document.getElementsByClassName(`x${x} y${y}`)[0].style.height = newSize + "px";
+                document.getElementsByClassName(`x${x} y${y}`)[0].style.width = newSize + "px";
+                areaSize = newSize, world.areaSize = newSize, world.car.areaSize = newSize, world.track.areaSize = newSize;
+            }
+        }
+        world.car.moveCarToElem(document.getElementsByClassName(`x${currentTile.x} y${currentTile.y}`)[0]);
+        world.centerElem(document.getElementsByClassName("car")[0])
     }
 
     collapsible() {

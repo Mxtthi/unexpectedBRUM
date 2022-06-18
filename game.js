@@ -6,6 +6,6 @@ if (trackCourse != 0 && typeof trackCourse !== undefined) {
 }
 world.loadWorld();
 world.car = new Car(world.areaSize, world.worldSize);
-world.car.positionCar();
+world.car.moveCarToElem(document.getElementsByClassName("start")[0])
 let updateWorld = setInterval(world.updateWorld, 100);
 world.addListeners();
