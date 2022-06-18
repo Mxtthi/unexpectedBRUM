@@ -188,15 +188,9 @@ class World {
         }
     }
 
-    test() {
-        return document.getElementsByClassName("car")[0].getBoundingClientRect();
-    }
-
-    testxy(x, y) {
-        console.log(document.getElementsByClassName(`x${x} y${y}`)[0].getBoundingClientRect());
-    }
-
+    // input as percentage
     changeAreaSize(newSize) {
+        newSize = newSize / 100 * window.innerWidth / 3;
         let currentTile = world.car.currentPosition;
         console.log(currentTile);
         for (let y = 0; y < world.worldSize; y++) {
@@ -260,8 +254,10 @@ class World {
         };
 
         document.getElementById("areaSizeOutput").innerHTML = document.getElementById("areaSizeSlider").value + "%";
-        document.getElementById("areaSizeSlider").oninput = function () {
+        document.getElementById("areaSizeSlider").onchange = function () {
+            if (this.value < 5) return;
             document.getElementById("areaSizeOutput").innerHTML = this.value + "%";
+            world.changeAreaSize(this.value);
             sessionStorage.setItem("areaSize", this.value);
         };
     }

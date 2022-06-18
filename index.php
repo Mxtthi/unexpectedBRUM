@@ -61,7 +61,7 @@
                     <span id="ViewRadiusOutput"></span>
                 </div>
                 <div><label for="areaSizeSlider">Area-Size:</label><br>
-                    <input id="areaSizeSlider" type="range" min="1" max="100" value="100">
+                    <input id="areaSizeSlider" type="range" min="5" max="200" value="100">
                     <span id="areaSizeOutput"></span>
                 </div>
             </div>
