@@ -20,7 +20,10 @@ document.addEventListener("keyup",
         if (e.key == "w" || e.key == "s") {
             world.car.accelerating = false;
             world.car.pauseAudio(world.car.drivingSound);
-            if (e.key == "s") world.car.pauseAudio(world.car.brakingSound);
+            if (e.key == "s") {
+                world.car.pauseAudio(world.car.brakingSound);
+                world.car.drivingSound.brakingSound = 0;
+            }
         }
         keys = keys.filter(t => t !== e.key);
     },
