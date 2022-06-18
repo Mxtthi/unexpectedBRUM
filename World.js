@@ -198,11 +198,11 @@ class World {
                 if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) break;
                 document.getElementsByClassName(`x${x} y${y}`)[0].style.height = newSize + "px";
                 document.getElementsByClassName(`x${x} y${y}`)[0].style.width = newSize + "px";
-                areaSize = newSize, world.areaSize = newSize, world.car.areaSize = newSize, world.track.areaSize = newSize;
             }
         }
+        areaSize = newSize, world.areaSize = newSize, world.car.areaSize = newSize, world.track.areaSize = newSize;
         world.car.moveCarToElem(document.getElementsByClassName(`x${currentTile.x} y${currentTile.y}`)[0]);
-        world.centerElem(document.getElementsByClassName("car")[0])
+        document.getElementsByClassName("car")[0].style.height = Math.round(areaSize * 0.15) + "px";
     }
 
     collapsible() {
