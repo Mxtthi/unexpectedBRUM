@@ -49,7 +49,7 @@ class Car extends World {
         let car = document.getElementsByClassName("car")[0];
         for (let i = 0; i < elems.length; i++) {
             const element = elems[i];
-            if (checkIfElementsOverlap(car, element)) {
+            if (world.checkIfElementsOverlap(car, element)) {
                 world.car.currentPosition.x = element.classList[0].substring(1);
                 world.car.currentPosition.y = element.classList[1].substring(1);
             }
@@ -134,7 +134,7 @@ class Car extends World {
         let road = document.getElementsByClassName("road");
         let onRoad = false;
         for (let i = 0; i < road.length; i++) {
-            if (checkIfElementsOverlap(car, road[i])) {
+            if (world.checkIfElementsOverlap(car, road[i])) {
                 onRoad = true;
                 world.drivenOn[i] = true;
                 break;

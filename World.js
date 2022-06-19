@@ -23,15 +23,13 @@ class World {
     checkIfCollectedCoin() {
         for (let i = 0; i < document.getElementsByClassName("coin").length; i++) {
             const element = document.getElementsByClassName("coin")[i];
-            if (checkIfElementsOverlap(document.getElementsByClassName("car")[0], element)) {
+            if (world.checkIfElementsOverlap(document.getElementsByClassName("car")[0], element)) {
                 element.remove();
                 world.collectedCoins++;
                 let clone = world.coinSound.cloneNode(true);
                 clone.volume = 0.1;
                 clone.play();
-                console.log(world.coinsArr);
                 world.coinsArr.splice(i, 1);
-                console.log(world.coinsArr);
             }
         }
     }
@@ -40,7 +38,6 @@ class World {
         for (let i = 0; i < world.coinsArr.length; i++) {
             const elem = world.coinsArr[i];
             let pos = document.getElementsByClassName(`x${elem.x} y${elem.y}`)[0].getBoundingClientRect();
-            console.log(pos.left + (world.areaSize / elem.xOff), pos.top + (world.areaSize / elem.yOff));
             world.spawnCoinAt(pos.left + (world.areaSize / elem.xOff), pos.top + (world.areaSize / elem.yOff));
         }
     }
@@ -59,7 +56,6 @@ class World {
                 let coin = {};
                 coin.x = x, coin.y = y, coin.xOff = getRandomInt(2, 4), coin.yOff = getRandomInt(2, 4);
                 world.coinsArr.push(coin);
-                console.log(world.coinsArr)
             }
             elem.classList.add("road");
             switch (world.track.trackCourse[i].turn) {
@@ -124,7 +120,7 @@ class World {
 
     updateWorld() {
         let currentX, currentY, renderPosX, renderPosY;
-        if (checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
+        if (world.checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
             world.drivenOn[world.track.trackLength - 1] = true;
             console.log(world.getRoadsDrivenOn(world.drivenOn), world.drivenOn)
             world.car.idleSound.pause();
@@ -235,7 +231,6 @@ class World {
 
         for (i = 0; i < coll.length; i++) {
             coll[i].addEventListener("click", function () {
-                console.log(this.nextElementSibling);
                 this.classList.toggle("active");
                 var content = this.nextElementSibling;
 
@@ -284,5 +279,22 @@ class World {
             world.changeAreaSize(this.value);
             sessionStorage.setItem("areaSize", this.value);
         };
+    }
+
+    getByChance(chance1, chance2) {
+        let rndm = getRandomInt(1, 100);
+        if (rndm <= chance1) {
+            return 1;
+        }
+        else if (rndm <= chance2) {
+            return 2;
+        }
+    }
+
+    checkIfElementsOverlap(elem1, elem2) {
+        let pos1 = elem1.getBoundingClientRect();
+        let pos2 = elem2.getBoundingClientRect();
+
+        return !(pos1.top > pos2.bottom || pos1.right < pos2.left || pos1.bottom < pos2.top || pos1.left > pos2.right);
     }
 }

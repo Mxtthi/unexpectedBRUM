@@ -245,7 +245,7 @@ class Track extends World {
                 if (possiblities[key].includes(connections[0]) && possiblities[key].includes(connections[1])) possibleRotations.push(key);
             }
 
-            if (possibleRotations.length > 1 && getByChance(50, 50) == 1) {
+            if (possibleRotations.length > 1 && world.getByChance(50, 50) == 1) {
                 rot = possibleRotations[1];
             } else {
                 rot = possibleRotations[0];
@@ -306,7 +306,7 @@ class Track extends World {
     }
 
     getTurn(chanceCurve, chanceStraight) {
-        if (getByChance(chanceCurve, chanceStraight) == 1) {
+        if (world.getByChance(chanceCurve, chanceStraight) == 1) {
             return "curve";
         } else {
             return "straight";
@@ -329,7 +329,7 @@ class Track extends World {
 
             switch (temp.direction) {
                 case "up":
-                    if (getByChance(50, 50) == 1) {
+                    if (world.getByChance(50, 50) == 1) {
                         obj.rotation = 270;
                         obj.facing = ["right", "down"];
                     } else {
@@ -337,7 +337,7 @@ class Track extends World {
                     }
                     break;
                 case "down":
-                    if (getByChance(50, 50) == 1) {
+                    if (world.getByChance(50, 50) == 1) {
                         obj.rotation = 90;
                         obj.facing = ["left", "up"];
                     } else {
@@ -346,7 +346,7 @@ class Track extends World {
                     }
                     break;
                 case "left":
-                    if (getByChance(50, 50) == 1) {
+                    if (world.getByChance(50, 50) == 1) {
                         obj.rotation = 180;
                         obj.facing = ["right", "up"];
                     } else {
@@ -355,7 +355,7 @@ class Track extends World {
                     }
                     break;
                 case "right":
-                    if (getByChance(50, 50) == 1) {
+                    if (world.getByChance(50, 50) == 1) {
                         obj.rotation = 90;
                         obj.facing = ["left", "up"];
                     } else {
