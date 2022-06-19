@@ -4,6 +4,16 @@ session_start();
 require "../../database.php";
 $error = "";
 
+if (isset($_POST["car"])) {
+    $car = $_POST["car"];
+    $userID = $_SESSION["id"];
+
+    $sql = "INSERT INTO unlockeditems (userID, itemname)
+        VALUES (?, ?);";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$userID, $car]);
+}
+
 if (isset($_POST["coins"])) {
     $coins = $_POST["coins"];
     $userID = $_SESSION["id"];

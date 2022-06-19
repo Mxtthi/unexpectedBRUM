@@ -6,13 +6,15 @@ class World {
         this.gameStatus = true;
         this.collectedCoins = coins;
         this.coinsArr = [];
+        this.ownArr = ["owned", "-", "-"];
+        this.carArr = ["Default", "Wrrrom", "Mährzedes"];
+        this.carPrices = [0, 25, 50, 100, 250, 1000];
+        this.carSpeeds = [1, 1.25, 1.5, 1.75, 2, 5];
         this.carObj = {
             "Default": "car.webp",
-            "Wrom": "car1.webp",
-            "Mercedes": "car2.webp"
+            "Wrrrom": "car1.webp",
+            "Mährzedes": "car2.webp"
         }
-        this.carArr = ["owned", "a", "a"];
-        this.carPrices = [0, 25, 50, 100, 250, 1000];
 
         this.coinSound = new Audio('./other/coin.mp3');
     }
@@ -116,6 +118,7 @@ class World {
             status.classList.add("status", "owned");
             status.type = "submit";
             status.id = "status" + i;
+            status.setAttribute("onclick", `world.buyCar(${i})`);
             status.disabled = true;
 
             img.src = "./other/" + world.carObj[key];
@@ -140,7 +143,7 @@ class World {
             document.getElementById("item" + i).appendChild(txt);
             document.getElementById("shop").appendChild(status);
 
-            world.setItemTo(document.getElementById("status" + i), world.carArr[i]);
+            world.setItemTo(document.getElementById("status" + i), world.ownArr[i]);
 
             i++;
         }
@@ -173,7 +176,7 @@ class World {
                 elem.previousSibling.children[1].disabled = true;
                 break;
             default:
-                cowdole.log("invalid value");
+                console.log("invalid value");
                 break;
         }
     }
@@ -181,22 +184,41 @@ class World {
     selectItem(elem) {
         for (let i = 0; i < document.getElementsByClassName("status").length; i++) {
             document.getElementsByClassName("status")[i].classList.remove("selected");
-            world.setItemTo(document.getElementsByClassName("status")[i], world.carArr[i]);
+            world.setItemTo(document.getElementsByClassName("status")[i], world.ownArr[i]);
         }
         elem.classList.add("selected");
         elem.value = "Selected";
     }
 
     checkPrices() {
-        for (let i = 0; i < world.carArr.length; i++) {
-            if (world.carArr[i] != "owned") {
+        for (let i = 0; i < world.ownArr.length; i++) {
+            if (world.ownArr[i] != "owned") {
                 if (world.collectedCoins >= world.carPrices[i]) {
-                    world.carArr[i] = "affordable";
+                    world.ownArr[i] = "affordable";
                 } else {
-                    world.carArr[i] = "unaffordable";
+                    world.ownArr[i] = "unaffordable";
                 }
             }
-            world.setItemTo(document.getElementById("status" + i), world.carArr[i]);
+            world.setItemTo(document.getElementById("status" + i), world.ownArr[i]);
+        }
+    }
+
+    updateOwnedCars(cars) {
+        for (let i = 0; i < cars.length; i++) {
+            let index = world.carArr.indexOf(cars[i]);
+            world.ownArr[index] = "owned";
+        }
+    }
+
+    buyCar(value) {
+        if (world.ownArr[value] != "owned" && world.collectedCoins >= world.carPrices[value]) {
+            console.log("valid");
+            world.collectedCoins -= world.carPrices[value];
+            document.getElementById("coinCounter").innerHTML = world.collectedCoins;
+            let data = {};
+            data.coins = world.collectedCoins;
+            data.car = world.carArr[value];
+            world.sendData(data);
         }
     }
 

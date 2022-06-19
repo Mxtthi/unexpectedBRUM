@@ -20,6 +20,7 @@
     session_start();
 
     $coins = 0;
+    $cars = 0;
     if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
         echo "<script>
         if (confirm('Du bist nicht eingeloggt. Als Gast fortfahren?')) {
@@ -39,8 +40,19 @@
         $data = $stmt->fetchAll();
 
         if (!empty($data)) {
-            echo $data[0]["coins"];
             $coins = $data[0]["coins"];
+        }
+
+        $sql = "SELECT * FROM unlockeditems WHERE userID = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$_SESSION['id']]);
+        $data = $stmt->fetchAll();
+
+        if (!empty($data)) {
+            $cars = [];
+            for ($i = 0; $i < count($data); $i++) {
+                array_push($cars, $data[$i]["itemname"]);
+            }
         }
     }
 
@@ -54,10 +66,13 @@
 
     <script>
         <?php
+        echo "var cars = [];";
+        for ($i = 0; $i < count($cars); $i++) {
+            echo "cars.push('$cars[$i]');";
+        }
         echo "var coins = $coins;";
         echo "var trackCourse = $track;";
         ?>
-        console.log(trackCourse);
     </script>
 
     <div id="codeDiv">

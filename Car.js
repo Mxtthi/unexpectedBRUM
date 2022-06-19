@@ -92,7 +92,8 @@ class Car extends World {
     }
 
     changeVelocity(value) {
-        value *= 0.01 * world.areaSize;
+        value *= 0.01 * world.areaSize * world.carSpeeds[sessionStorage.getItem("car")];
+        console.log(value);
         let multiplicator = 1;
         if (this.velocity < 0 && value > 0 || this.velocity > 0 && value < 0) {
             multiplicator = 3;
