@@ -12,7 +12,7 @@ class World {
 
     spawnCoinAt(posX, posY) {
         let coin = document.createElement("img");
-        coin.src = "./other/coin.png";
+        coin.src = "./other/coin.webp";
         coin.classList.add("coin");
         coin.style.left = posX + "px";
         coin.style.top = posY + "px";

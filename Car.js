@@ -87,7 +87,7 @@ class Car extends World {
         elem.classList.add("car");
         elem.style.height = this.height + "px";
         elem.style.transform = `rotate(${this.rotation}deg)`;
-        elem.src = "other/car.png";
+        elem.src = "other/car.webp";
         document.body.appendChild(elem);
     }
 

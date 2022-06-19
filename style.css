@@ -21,7 +21,7 @@ body {
 }
 
 .areaDiv {
-    background-image: url(./other/grass.png);
+    background-image: url(./other/grass.webp);
     background-size: cover;
 }
 
@@ -30,27 +30,27 @@ body {
 }
 
 .start {
-    background-image: url(./other/start.png) !important;
+    background-image: url(./other/start.webp) !important;
 }
 
 .end {
-    background-image: url(./other/end.png) !important;
+    background-image: url(./other/end.webp) !important;
 }
 
 .straight {
-    background-image: url(./other/straight.png) !important;
+    background-image: url(./other/straight.webp) !important;
 }
 
 .curve {
-    background-image: url(./other/curve.png) !important;
+    background-image: url(./other/curve.webp) !important;
 }
 
 .crossing {
-    background-image: url(./other/crossing.png) !important;
+    background-image: url(./other/crossing.webp) !important;
 }
 
 .tcrossing {
-    background-image: url(./other/tcross.png) !important;
+    background-image: url(./other/tcross.webp) !important;
 }
 
 .car {
@@ -144,77 +144,77 @@ body {
 /* background variations */
 
 .var1 {
-    background-image: url(./other/var1.png);
+    background-image: url(./other/var1.webp);
 }
 
 .var2 {
-    background-image: url(./other/var2.png);
+    background-image: url(./other/var2.webp);
 }
 
 .var3 {
-    background-image: url(./other/var3.png);
+    background-image: url(./other/var3.webp);
 }
 
 .var4 {
-    background-image: url(./other/var4.png);
+    background-image: url(./other/var4.webp);
 }
 
 .var5 {
-    background-image: url(./other/var5.png);
+    background-image: url(./other/var5.webp);
 }
 
 .var6 {
-    background-image: url(./other/var6.png);
+    background-image: url(./other/var6.webp);
 }
 
 .var7 {
-    background-image: url(./other/var7.png);
+    background-image: url(./other/var7.webp);
 }
 
 .var8 {
-    background-image: url(./other/var8.png);
+    background-image: url(./other/var8.webp);
 }
 
 .var9 {
-    background-image: url(./other/var9.png);
+    background-image: url(./other/var9.webp);
 }
 
 .var10 {
-    background-image: url(./other/var10.png);
+    background-image: url(./other/var10.webp);
 }
 
 .var11 {
-    background-image: url(./other/var11.png);
+    background-image: url(./other/var11.webp);
 }
 
 .var12 {
-    background-image: url(./other/var12.png);
+    background-image: url(./other/var12.webp);
 }
 
 .var13 {
-    background-image: url(./other/var13.png);
+    background-image: url(./other/var13.webp);
 }
 
 .var14 {
-    background-image: url(./other/var14.png);
+    background-image: url(./other/var14.webp);
 }
 
 .var15 {
-    background-image: url(./other/var15.png);
+    background-image: url(./other/var15.webp);
 }
 
 .var16 {
-    background-image: url(./other/var16.png);
+    background-image: url(./other/var16.webp);
 }
 
 .var17 {
-    background-image: url(./other/var17.png);
+    background-image: url(./other/var17.webp);
 }
 
 .var18 {
-    background-image: url(./other/var18.png);
+    background-image: url(./other/var18.webp);
 }
 
 .var19 {
-    background-image: url(./other/var19.png);
+    background-image: url(./other/var19.webp);
 }
