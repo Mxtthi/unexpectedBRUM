@@ -29,8 +29,18 @@ class World {
                 let clone = world.coinSound.cloneNode(true);
                 clone.volume = 0.1;
                 clone.play();
+                console.log(world.coinsArr);
+                console.log(world.coinsArr.splice(i, 1))
                 world.coinsArr.splice(i, 1);
+                console.log(world.coinsArr);
             }
+        }
+    }
+
+    removeAllCoins() {
+        console.log(document.getElementsByClassName("coin").length);
+        for (let i = document.getElementsByClassName("coin").length - 1; i >= 0; i--) {
+            document.getElementsByClassName("coin")[i].remove();
         }
     }
 
@@ -52,7 +62,7 @@ class World {
             let elem = document.getElementsByClassName(`x${x} y${y}`)[0];
 
 
-            if (getRandomInt(0, 5) == 0 && world.track.trackCourse[i].turn != "start" && world.track.trackCourse[i].turn != "end") {
+            if (getRandomInt(0, 7) == 0 && world.track.trackCourse[i].turn != "start" && world.track.trackCourse[i].turn != "end") {
                 let coin = {};
                 coin.x = x, coin.y = y, coin.xOff = getRandomInt(2, 4), coin.yOff = getRandomInt(2, 4);
                 world.coinsArr.push(coin);
@@ -218,9 +228,7 @@ class World {
         document.getElementsByClassName("car")[0].style.height = Math.round(areaSize * 0.15) + "px";
 
         window.scrollTo(0, 0);
-        for (let i = 0; i < document.getElementsByClassName("coin").length; i++) {
-            document.getElementsByClassName("coin")[i].remove();
-        }
+        world.removeAllCoins();
         console.log(document.getElementsByClassName("coin"))
         world.loadCoins();
     }

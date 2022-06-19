@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>unexpectedBrum</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -73,9 +73,10 @@
                 </div>
             </div>
         </div>
+    </div>
 
-
-
+    <div id="coinsDiv">
+        <p id="coins"></p>
     </div>
 
     <script type="text/javascript" src="functions.js"></script>
