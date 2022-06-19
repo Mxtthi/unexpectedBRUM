@@ -1,10 +1,10 @@
 class World {
-    constructor(areaSize, worldSize) {
+    constructor(areaSize, worldSize, coins) {
         this.areaSize = areaSize;
         this.worldSize = worldSize;
         this.drivenOn = [];
         this.gameStatus = true;
-        this.collectedCoins = 0;
+        this.collectedCoins = coins;
         this.coinsArr = [];
 
         this.coinSound = new Audio('./other/coin.mp3');
@@ -42,6 +42,7 @@ class World {
     }
 
     loadCoins() {
+        document.getElementById("coinCounter").innerHTML = world.collectedCoins;
         for (let i = 0; i < world.coinsArr.length; i++) {
             const elem = world.coinsArr[i];
             let pos = document.getElementsByClassName(`x${elem.x} y${elem.y}`)[0].getBoundingClientRect();
@@ -129,10 +130,13 @@ class World {
         let currentX, currentY, renderPosX, renderPosY;
         if (world.checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
             world.drivenOn[world.track.trackLength - 1] = true;
-            console.log(world.getRoadsDrivenOn(world.drivenOn), world.drivenOn)
+
+            world.sendData({ coins: world.collectedCoins })
+
             world.car.idleSound.pause();
             world.car.drivingSound.pause();
             world.car.brakingSound.pause();
+
             alert("finished race");
             location.reload(true);
         }

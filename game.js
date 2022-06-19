@@ -1,4 +1,4 @@
-let world = new World(areaSize, worldSize)
+let world = new World(areaSize, worldSize, coins)
 world.track = new Track(world.areaSize, world.worldSize, trackLength);
 if (trackCourse != 0 && typeof trackCourse !== undefined) {
     world.track.trackCourse = trackCourse;

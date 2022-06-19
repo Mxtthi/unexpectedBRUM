@@ -4,9 +4,29 @@ session_start();
 require "../../database.php";
 $error = "";
 
+if (isset($_POST["coins"])) {
+    $coins = $_POST["coins"];
+    $userID = $_SESSION["id"];
+
+    $sql = "SELECT * FROM usersdetails WHERE userID = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$userID]);
+    $data = $stmt->fetchAll();
+
+    if (empty($data)) {
+        $sql = "INSERT INTO usersdetails (userID, coins)
+        VALUES (?, ?);";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$userID, $coins]);
+    } else {
+        $sql = 'UPDATE usersdetails SET coins = ? WHERE userID =  ?;';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$coins, $userID]);
+    }
+}
+
 if (isset($_POST["code"])) {
     $trackCode = $_POST["code"];
-
 
     $sql = "SELECT * FROM tracks WHERE trackCode = ?";
     $stmt = $db->prepare($sql);

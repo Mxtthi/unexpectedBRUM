@@ -8,11 +8,15 @@
     <title>unexpectedBrum</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
     <?php
+    require "../../database.php";
     session_start();
 
     if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
@@ -25,8 +29,18 @@
         </script>";
     } else {
         echo "<script>
-        sessionStorage.setItem('loggedIn', false);;
+        sessionStorage.setItem('loggedIn', true);;
         </script>";
+
+        $sql = "SELECT * FROM usersdetails WHERE userID = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$_SESSION['id']]);
+        $data = $stmt->fetchAll();
+
+        if (!empty($data)) {
+            echo $data[0]["coins"];
+            $coins = $data[0]["coins"];
+        }
     }
 
     if (isset($_SESSION["track"])) {
@@ -34,11 +48,13 @@
         unset($_SESSION["track"]);
     } else {
         $track = 0;
+        $coins = 0;
     }
     ?>
 
     <script>
         <?php
+        echo "var coins = $coins;";
         echo "var trackCourse = $track;";
         ?>
         console.log(trackCourse);
