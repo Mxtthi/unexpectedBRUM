@@ -8,7 +8,10 @@ document.addEventListener("keydown",
             }
             if (e.key == "Tab") {
                 e.preventDefault();
-                location.reload(true);
+                if (world.gameStatus) {
+                    world.gameStatus = false;
+                    location.reload(true);
+                }
             }
             keys.push(e.key);
         }

@@ -266,17 +266,19 @@ class World {
         world.checkPrices();
 
         let currentX, currentY, renderPosX, renderPosY;
-        if (world.checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
+        if (world.checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0]) && world.gameStatus) {
             world.drivenOn[world.track.trackLength - 1] = true;
 
+            world.gameStatus = false;
             world.sendData({ coins: world.collectedCoins })
 
             world.car.idleSound.pause();
             world.car.drivingSound.pause();
             world.car.brakingSound.pause();
 
-            alert("finished race");
-            location.reload(true);
+            if (confirm('Race finished. Start a new race?')) {
+                location.reload(true);
+            }
         }
 
         world.checkIfCollectedCoin();
