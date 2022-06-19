@@ -76,7 +76,8 @@
     </div>
 
     <div id="coinsDiv">
-        <p id="coins"></p>
+        <span id="coinCounter">0</span>
+        <img src="./other/coin.webp" id="coinIcon">
     </div>
 
     <script type="text/javascript" src="functions.js"></script>

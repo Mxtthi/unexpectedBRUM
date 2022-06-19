@@ -14,6 +14,22 @@ body {
     z-index: 1;
 }
 
+#coinsDiv {
+    position: fixed;
+    left: 5%;
+    bottom: 5%;
+    z-index: 100;
+}
+
+#coinCounter {
+    font-size: 4vh;
+}
+
+#coinIcon {
+    height: 3vh;
+    width: auto;
+}
+
 .worldDiv {
     display: grid;
     max-width: max-content;

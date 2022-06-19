@@ -26,19 +26,16 @@ class World {
             if (world.checkIfElementsOverlap(document.getElementsByClassName("car")[0], element)) {
                 element.remove();
                 world.collectedCoins++;
+                document.getElementById("coinCounter").innerHTML = world.collectedCoins;
                 let clone = world.coinSound.cloneNode(true);
                 clone.volume = 0.1;
                 clone.play();
-                console.log(world.coinsArr);
-                console.log(world.coinsArr.splice(i, 1))
                 world.coinsArr.splice(i, 1);
-                console.log(world.coinsArr);
             }
         }
     }
 
     removeAllCoins() {
-        console.log(document.getElementsByClassName("coin").length);
         for (let i = document.getElementsByClassName("coin").length - 1; i >= 0; i--) {
             document.getElementsByClassName("coin")[i].remove();
         }
@@ -224,13 +221,12 @@ class World {
         }
 
         areaSize = newSize, world.areaSize = newSize, world.car.areaSize = newSize, world.track.areaSize = newSize;
-        world.car.moveCarToElem(document.getElementsByClassName(`x${currentTile.x} y${currentTile.y}`)[0]);
-        document.getElementsByClassName("car")[0].style.height = Math.round(areaSize * 0.15) + "px";
-
         window.scrollTo(0, 0);
         world.removeAllCoins();
-        console.log(document.getElementsByClassName("coin"))
         world.loadCoins();
+
+        world.car.moveCarToElem(document.getElementsByClassName(`x${currentTile.x} y${currentTile.y}`)[0]);
+        document.getElementsByClassName("car")[0].style.height = Math.round(areaSize * 0.15) + "px";
     }
 
     collapsible() {
