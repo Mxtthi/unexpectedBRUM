@@ -14,6 +14,8 @@ class Car extends World {
         this.brakingSound.volume = 0.1;
         this.idleSound.volume = 0.3;
         this.idleSound.loop = true;
+        this.drivingSound.loop = true;
+        this.brakingSound.loop = true;
 
         this.createCar();
         this.spawnCar();
