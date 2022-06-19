@@ -6,6 +6,13 @@ class World {
         this.gameStatus = true;
         this.collectedCoins = coins;
         this.coinsArr = [];
+        this.carObj = {
+            "Default": "car.webp",
+            "Wrom": "car1.webp",
+            "Mercedes": "car2.webp"
+        }
+        this.carArr = ["owned", "a", "a"];
+        this.carPrices = [0, 25, 50, 100, 250, 1000];
 
         this.coinSound = new Audio('./other/coin.mp3');
     }
@@ -94,6 +101,103 @@ class World {
             elem.setAttribute("style", `transform: rotate(${world.track.trackCourse[i].rotation}deg); `);
         }
         world.loadCoins();
+        world.loadShopItems();
+    }
+
+    loadShopItems() {
+        let i = 0;
+        for (const key in world.carObj) {
+            let div = document.createElement("div"), status = document.createElement("input"), img = document.createElement("img"),
+                button = document.createElement("input"), txt = document.createElement("span");
+
+            div.classList.add("shopItemDiv");
+            div.id = "item" + i;
+
+            status.classList.add("status", "owned");
+            status.type = "submit";
+            status.id = "status" + i;
+            status.disabled = true;
+
+            img.src = "./other/" + world.carObj[key];
+            img.classList.add("shopItem", "unselectable");
+
+            button.type = "radio";
+            button.classList.add("selectCar");
+            button.name = "car";
+            button.id = "button" + i;
+            button.value = world.carObj[key];
+            if (sessionStorage.getItem("car") == i) {
+                button.checked = true;
+            } else if (sessionStorage.getItem("car") == undefined && i == 0) {
+                button.checked = true;
+            }
+            txt.innerHTML = "<br>" + key + "<br>";
+            txt.classList.add("unselectable");
+
+            document.getElementById("shop").appendChild(div);
+            document.getElementById("item" + i).appendChild(img);
+            document.getElementById("item" + i).appendChild(button);
+            document.getElementById("item" + i).appendChild(txt);
+            document.getElementById("shop").appendChild(status);
+
+            world.setItemTo(document.getElementById("status" + i), world.carArr[i]);
+
+            i++;
+        }
+    }
+
+    setItemTo(elem, value) {
+        let possibilities = ["owned", "affordable", "unaffordable"];
+        let index = elem.id.charAt(elem.id.length - 1);
+        possibilities.splice(possibilities.indexOf(value), 1)
+        elem.classList.add(value);
+        for (let i = 0; i < possibilities.length; i++) {
+            elem.classList.remove(possibilities[i]);
+        }
+
+        switch (value) {
+            case "owned":
+                elem.value = "Owned";
+                elem.disabled = true;
+                elem.previousSibling.children[1].disabled = false;
+                break;
+            case "affordable":
+                elem.value = "Buy - " + world.carPrices[index] + " coins";
+                elem.disabled = false;
+                elem.previousSibling.children[1].disabled = true;
+                break;
+            case "unaffordable":
+                elem.value = "Too expensive";
+                elem.disabled = true;
+                elem.previousSibling.children[1].checked = false;
+                elem.previousSibling.children[1].disabled = true;
+                break;
+            default:
+                cowdole.log("invalid value");
+                break;
+        }
+    }
+
+    selectItem(elem) {
+        for (let i = 0; i < document.getElementsByClassName("status").length; i++) {
+            document.getElementsByClassName("status")[i].classList.remove("selected");
+            world.setItemTo(document.getElementsByClassName("status")[i], world.carArr[i]);
+        }
+        elem.classList.add("selected");
+        elem.value = "Selected";
+    }
+
+    checkPrices() {
+        for (let i = 0; i < world.carArr.length; i++) {
+            if (world.carArr[i] != "owned") {
+                if (world.collectedCoins >= world.carPrices[i]) {
+                    world.carArr[i] = "affordable";
+                } else {
+                    world.carArr[i] = "unaffordable";
+                }
+            }
+            world.setItemTo(document.getElementById("status" + i), world.carArr[i]);
+        }
     }
 
     sendButtonPressed() {
@@ -127,6 +231,12 @@ class World {
 
 
     updateWorld() {
+        sessionStorage.setItem("carsrc", document.querySelector('input[name="car"]:checked').value);
+        sessionStorage.setItem("car", document.querySelector('input[name="car"]:checked').id.charAt(document.querySelector('input[name="car"]:checked').id.length - 1));
+        document.getElementsByClassName("car")[0].src = "./other/" + sessionStorage.getItem("carsrc");
+        world.selectItem(document.getElementsByClassName("status")[sessionStorage.getItem("car")]);
+        world.checkPrices();
+
         let currentX, currentY, renderPosX, renderPosY;
         if (world.checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0])) {
             world.drivenOn[world.track.trackLength - 1] = true;

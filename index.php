@@ -19,6 +19,7 @@
     require "../../database.php";
     session_start();
 
+    $coins = 0;
     if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
         echo "<script>
         if (confirm('Du bist nicht eingeloggt. Als Gast fortfahren?')) {
@@ -48,7 +49,6 @@
         unset($_SESSION["track"]);
     } else {
         $track = 0;
-        $coins = 0;
     }
     ?>
 
@@ -91,12 +91,17 @@
         </div>
     </div>
 
+    <div id="shopDiv">
+        <button class="collapsible active">Shop</button>
+        <div class="content" id="shop">
+        </div>
+    </div>
+
     <div id="coinsDiv">
         <span id="coinCounter">0</span>
         <img src="./other/coin.webp" id="coinIcon">
     </div>
 
-    <script type="text/javascript" src="functions.js"></script>
     <script type="text/javascript" src="gameSettings.js"></script>
     <script type="text/javascript" src="World.js"></script>
     <script type="text/javascript" src="Track.js"></script>
