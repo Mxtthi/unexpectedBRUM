@@ -6,14 +6,17 @@ class World {
         this.gameStatus = true;
         this.collectedCoins = coins;
         this.coinsArr = [];
-        this.ownArr = ["owned", "-", "-"];
-        this.carArr = ["Default", "Wrrrom", "Mährzedes"];
+        this.ownArr = ["owned", "-", "-", "-", "-", "-"];
+        this.carArr = ["Default", "Flitza", "Wrrom", "BRUM", "fastAF", "kenigseia"];
         this.carPrices = [0, 25, 50, 100, 250, 1000];
-        this.carSpeeds = [1, 1.25, 1.5, 1.75, 2, 5];
+        this.carSpeeds = [0.75, 1, 1.25, 1.5, 1.75, 2.5];
         this.carObj = {
             "Default": "car.webp",
-            "Wrrrom": "car1.webp",
-            "Mährzedes": "car2.webp"
+            "Flitza": "car4.webp",
+            "Wrrom": "car7.webp",
+            "BRUM": "car6.webp",
+            "fastAF": "car5.webp",
+            "kenigseia": "car3.webp",
         }
 
         this.coinSound = new Audio('./other/coin.mp3');
@@ -157,22 +160,24 @@ class World {
         for (let i = 0; i < possibilities.length; i++) {
             elem.classList.remove(possibilities[i]);
         }
+        if (value != "owned") elem.classList.remove("selected");
 
         switch (value) {
             case "owned":
-                elem.value = "Owned";
+                if (!(elem.classList.contains("selected"))) elem.value = "Owned";
                 elem.disabled = true;
                 elem.previousSibling.children[1].disabled = false;
                 break;
             case "affordable":
-                elem.value = "Buy - " + world.carPrices[index] + " coins";
+                elem.value = world.carPrices[index] + " coins";
                 elem.disabled = false;
+                if (elem.previousSibling.children[1].checked) document.getElementById("button0").checked;
                 elem.previousSibling.children[1].disabled = true;
                 break;
             case "unaffordable":
-                elem.value = "Too expensive";
+                elem.value = world.carPrices[index] + " coins";
                 elem.disabled = true;
-                elem.previousSibling.children[1].checked = false;
+                if (elem.previousSibling.children[1].checked) document.getElementById("button0").checked = true;
                 elem.previousSibling.children[1].disabled = true;
                 break;
             default:
@@ -219,6 +224,7 @@ class World {
             data.coins = world.collectedCoins;
             data.car = world.carArr[value];
             world.sendData(data);
+            world.updateOwnedCars([world.carArr[value]]);
         }
     }
 

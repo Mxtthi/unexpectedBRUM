@@ -118,6 +118,9 @@ class Car extends World {
     }
 
     changeRotation(value) {
+        let multiplier = 1 + (world.carSpeeds[sessionStorage.getItem("car")] - 1) / 2
+        if (multiplier > 2) multiplier = 2;
+        value *= multiplier;
         if (this.velocity > world.areaSize * 0.03 || this.velocity < -world.areaSize * 0.03) {
             this.rotation += value;
             if (this.rotation >= 360 || this.rotation <= -360) {

@@ -67,8 +67,10 @@
     <script>
         <?php
         echo "var cars = [];";
-        for ($i = 0; $i < count($cars); $i++) {
-            echo "cars.push('$cars[$i]');";
+        if ($cars != 0) {
+            for ($i = 0; $i < count($cars); $i++) {
+                echo "cars.push('$cars[$i]');";
+            }
         }
         echo "var coins = $coins;";
         echo "var trackCourse = $track;";
