@@ -2,16 +2,14 @@ let keys = [];
 
 document.addEventListener("keydown",
     function (e) {
+        console.log(e.key);
         if (keys.includes(e.key) === false) {
             if (e.key == "w" || e.key == "s") {
                 world.car.accelerating = true;
             }
             if (e.key == "Tab") {
                 e.preventDefault();
-                if (world.gameStatus) {
-                    world.gameStatus = false;
-                    location.reload(true);
-                }
+                location.reload(true);
             }
             keys.push(e.key);
         }
