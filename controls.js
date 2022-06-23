@@ -2,7 +2,6 @@ let keys = [];
 
 document.addEventListener("keydown",
     function (e) {
-        console.log(e.key);
         if (keys.includes(e.key) === false) {
             if (e.key == "w" || e.key == "s") {
                 world.car.accelerating = true;

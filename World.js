@@ -109,24 +109,50 @@ class World {
         world.loadShopItems();
     }
 
+    setRadioListener() {
+        for (let i = 0; i < document.getElementsByClassName("selectCar").length; i++) {
+            const element = document.getElementsByClassName("selectCar")[i];
+
+            element.addEventListener("click", function (e) {
+                let i = this.id.substring(this.id.length - 1);
+                if (document.getElementById("status" + i).classList.contains("owned") || world.collectedCoins >= world.carPrices[i]) {
+                    console.log("allowed")
+                } else {
+                    e.preventDefault();
+                }
+            })
+        }
+    }
+
     loadShopItems() {
         let i = 0;
         for (const key in world.carObj) {
-            let div = document.createElement("div"), status = document.createElement("input"), img = document.createElement("img"),
-                button = document.createElement("input"), txt = document.createElement("span");
+            let div = document.createElement("div"), img = document.createElement("img"),
+                txt = document.createElement("span"), statusDiv = document.createElement("div"),
+                button = document.createElement("input"), statusLabel = document.createElement("label");
 
+
+            // 1. div
             div.classList.add("shopItemDiv");
             div.id = "item" + i;
-
-            status.classList.add("status", "owned");
-            status.type = "submit";
-            status.id = "status" + i;
-            status.setAttribute("onclick", `world.buyCar(${i})`);
-            status.disabled = true;
 
             img.src = "./other/" + world.carObj[key];
             img.classList.add("shopItem", "unselectable");
 
+            txt.innerHTML = key;
+            txt.classList.add("unselectable");
+
+
+            // 2. div
+            statusDiv.classList.add("status", "owned", "button");
+            statusDiv.id = "status" + i;
+
+            statusLabel.id = "label" + i;
+            statusLabel.htmlFor = "button" + i;
+            statusLabel.classList.add("btn");
+            statusLabel.textContent = "test";
+
+            button.setAttribute("onclick", `world.buyCar(${i})`);
             button.type = "radio";
             button.classList.add("selectCar");
             button.name = "car";
@@ -137,14 +163,13 @@ class World {
             } else if (sessionStorage.getItem("car") == undefined && i == 0) {
                 button.checked = true;
             }
-            txt.innerHTML = "<br>" + key + "<br>";
-            txt.classList.add("unselectable");
 
             document.getElementById("shop").appendChild(div);
             document.getElementById("item" + i).appendChild(img);
-            document.getElementById("item" + i).appendChild(button);
             document.getElementById("item" + i).appendChild(txt);
-            document.getElementById("shop").appendChild(status);
+            document.getElementById("shop").appendChild(statusDiv);
+            document.getElementById("status" + i).appendChild(button);
+            document.getElementById("status" + i).appendChild(statusLabel);
 
             world.setItemTo(document.getElementById("status" + i), world.ownArr[i]);
 
@@ -153,6 +178,8 @@ class World {
     }
 
     setItemTo(elem, value) {
+        // console.log(elem);
+        let int = elem.id.substring(elem.id.length - 1);
         let possibilities = ["owned", "affordable", "unaffordable"];
         let index = elem.id.charAt(elem.id.length - 1);
         possibilities.splice(possibilities.indexOf(value), 1)
@@ -160,25 +187,22 @@ class World {
         for (let i = 0; i < possibilities.length; i++) {
             elem.classList.remove(possibilities[i]);
         }
-        if (value != "owned") elem.classList.remove("selected");
+        if (value != "owned") {
+            elem.classList.remove("selected");
+        }
+        if (document.getElementById("button" + int).checked && world.ownArr[int] != "owned") {
+            document.getElementById("button1").checked = true;
+        }
 
         switch (value) {
             case "owned":
-                if (!(elem.classList.contains("selected"))) elem.value = "Owned";
-                elem.disabled = true;
-                elem.previousSibling.children[1].disabled = false;
+                if (!(elem.classList.contains("selected"))) document.getElementById("label" + int).textContent = "Owned";
                 break;
             case "affordable":
-                elem.value = world.carPrices[index] + " coins";
-                elem.disabled = false;
-                if (elem.previousSibling.children[1].checked) document.getElementById("button0").checked;
-                elem.previousSibling.children[1].disabled = true;
+                document.getElementById("label" + int).textContent = world.carPrices[index] + " coins";
                 break;
             case "unaffordable":
-                elem.value = world.carPrices[index] + " coins";
-                elem.disabled = true;
-                if (elem.previousSibling.children[1].checked) document.getElementById("button0").checked = true;
-                elem.previousSibling.children[1].disabled = true;
+                document.getElementById("label" + int).textContent = world.carPrices[index] + " coins";
                 break;
             default:
                 console.log("invalid value");
@@ -187,12 +211,16 @@ class World {
     }
 
     selectItem(elem) {
-        for (let i = 0; i < document.getElementsByClassName("status").length; i++) {
-            document.getElementsByClassName("status")[i].classList.remove("selected");
-            world.setItemTo(document.getElementsByClassName("status")[i], world.ownArr[i]);
+        if (elem.classList.contains("owned")) {
+            for (let i = 0; i < document.getElementsByClassName("status").length; i++) {
+                document.getElementsByClassName("status")[i].classList.remove("selected");
+                world.setItemTo(document.getElementsByClassName("status")[i], world.ownArr[i]);
+            }
+            elem.classList.add("selected");
+            elem.value = "Selected";
+        } else {
+            console.log("not owned");
         }
-        elem.classList.add("selected");
-        elem.value = "Selected";
     }
 
     checkPrices() {

@@ -80,42 +80,127 @@
         ?>
     </script>
 
-    <div id="codeDiv">
-        <button class="collapsible active">Options</button>
-        <div class="content">
-            <div>
-                <div><label for="trackLengthSlider">Track-Length:</label><br>
-                    <input id="trackLengthSlider" type="range" min="1" max="500" value="100">
-                    <span id="trackLengthOutput"></span>
+    <div id="home">
+        <a href="../../">
+            <p>Home</p>
+        </a>
+    </div>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <div id="mainContainer" class="unselectable">
+            <button class="collapsible">General Settings</button>
+            <hr>
+            <div class="content">
+                <div>
+                    <div><label for="trackLengthSlider">Track-Length:</label><br>
+                        <input id="trackLengthSlider" type="range" min="1" max="500" value="100">
+                        <span id="trackLengthOutput"></span>
+                    </div>
+                    <div><label for="worldSizeSlider">World-Size:</label><br>
+                        <input id="worldSizeSlider" type="range" min="5" max="50" value="25">
+                        <span id="worldSizeOutput"></span>
+                    </div>
+                    <div><label for="ViewRadiusSlider">Render-Distance:</label><br>
+                        <input id="ViewRadiusSlider" type="range" min="1" max="100" value="2">
+                        <span id="ViewRadiusOutput"></span>
+                    </div>
+                    <div><label for="areaSizeSlider">Field of View:</label><br>
+                        <input id="areaSizeSlider" type="range" min="5" max="200" value="100">
+                        <span id="areaSizeOutput"></span>
+                    </div>
                 </div>
-                <div><label for="worldSizeSlider">World-Size:</label><br>
-                    <input id="worldSizeSlider" type="range" min="5" max="50" value="25">
-                    <span id="worldSizeOutput"></span>
+                <div id="codeDiv">
+                    <input type="submit" id="getCode" name="getCode" value="Create Code">
+                    <input type="submit" id="setCode" name="setCode" value="Load Code">
+                    <div id="result">
+                        <input type="text" id="codeInput" name="codeInput" placeholder="4F35">
+                    </div>
                 </div>
-                <div><label for="ViewRadiusSlider">Render-Distance:</label><br>
-                    <input id="ViewRadiusSlider" type="range" min="1" max="100" value="2">
-                    <span id="ViewRadiusOutput"></span>
-                </div>
-                <div><label for="areaSizeSlider">Field of View:</label><br>
-                    <input id="areaSizeSlider" type="range" min="5" max="200" value="100">
-                    <span id="areaSizeOutput"></span>
-                </div>
+                <hr>
             </div>
-            <div>
-                <input type="submit" id="getCode" name="getCode" value="Create Code">
-                <input type="submit" id="setCode" name="setCode" value="Load Code">
-                <div id="result">
-                    <input type="text" id="codeInput" name="codeInput" placeholder="4F35">
+
+            <button class="collapsible">Shop</button>
+            <hr>
+            <div id="collapsibleContent" class="content">
+                <div id="shop">
                 </div>
+                <hr>
             </div>
         </div>
     </div>
 
-    <div id="shopDiv">
-        <button class="collapsible active">Shop</button>
-        <div class="content" id="shop">
-        </div>
+    <div id="main" class="unselectable">
+        <button id="openButton" class="openbtn" onclick="openNav()">☰</button>
     </div>
+
+
+
+
+
+
+    <script>
+        collapsible();
+
+        window.addEventListener('click', function(e) {
+            if (!document.getElementById('mySidebar').contains(e.target) && !document.getElementById('openButton').contains(e.target) && document.getElementById("mySidebar").style.width != "" && document.getElementById("mySidebar").style.width != "0px") {
+                closeNav();
+            }
+        }, );
+
+        for (let i = 0; i < document.getElementsByClassName("collapsible").length; i++) {
+            document.getElementsByClassName("collapsible")[i].addEventListener('click', function() {
+                if (document.getElementsByClassName("collapsible")[i].classList.contains("active")) {
+                    let temp = 0;
+                    if (i == 0) temp = 1;
+                    if (i == 1) temp = 0;
+                    document.getElementsByClassName("content")[temp].style = "";
+                    document.getElementsByClassName("collapsible")[temp].classList.remove("active");
+                }
+            });
+        }
+
+        function collapsible() {
+            let coll = document.getElementsByClassName("collapsible"),
+                i;
+
+            for (i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    let content = this.nextElementSibling.nextElementSibling;
+
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            }
+        }
+
+        //open/close sidebar
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "25%";
+            document.getElementById("main").style.marginLeft = "25%";
+            document.getElementById("openButton").style.display = "none";
+            NavOpen = true;
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.getElementById("openButton").style.display = "block";
+            NavOpen = false;
+        }
+    </script>
+
+
+
+
+
+
+
+
 
     <div id="coinsDiv">
         <span id="coinCounter">0</span>

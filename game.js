@@ -7,6 +7,7 @@ if (trackCourse != 0 && typeof trackCourse !== undefined) {
 }
 world.loadWorld();
 if (cars != 0) world.updateOwnedCars(cars);
+world.setRadioListener()
 world.car = new Car(world.areaSize, world.worldSize);
 world.car.moveCarToElem(document.getElementsByClassName("start")[0])
 let updateWorld = setInterval(world.updateWorld, 100);

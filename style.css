@@ -1,35 +1,62 @@
 body {
     overflow: hidden;
     font-family: 'Roboto', sans-serif;
+    margin: 0;
 }
 
-#codeDiv {
+#home {
     position: fixed;
-    left: 5%;
-    top: 5%;
-    z-index: 100;
+    bottom: 0;
+    right: 0;
+    z-index: 101;
+    background-color: white;
+    padding: 1vw;
 }
 
-#shopDiv {
-    position: fixed;
-    right: 5%;
-    top: 5%;
-    z-index: 100;
+#home a {
+    text-decoration: none;
+}
+
+#codeDiv * {
+    color: black;
+}
+
+.settings {
+    /*display: flex;
+	justify-content: center;
+	align-content: center;*/
+    background-color: grey;
     width: 15vw;
+    z-index: 100;
+    position: fixed;
+    width: max-content;
 }
+
+.settings button {
+    color: black !important;
+}
+
 
 #shop {
-    background-color: rgb(170, 170, 170);
     display: grid;
     grid-template-columns: 50% 50%;
+    grid-gap: 0 0.5vw;
 }
 
 .shopItemDiv {
     padding: 1vw;
+    display: flex;
+    justify-content: left;
+    align-content: center;
+}
+
+.shopItemDiv span {
+    align-self: center;
+    margin-left: 0.5vw;
 }
 
 .shopItem {
-    height: 5vh;
+    height: 7vh;
     width: auto;
 }
 
@@ -44,18 +71,27 @@ body {
 }
 
 .selected {
-    background-color: #d2d2d2 !important;
-    border: 3px solid black;
+    background-color: #a8a8a8 !important;
 }
 
 .affordable {
     background-color: green;
-    border: 4px solid darkgreen;
-    cursor: pointer;
+}
+
+.affordable :hover {
+    background-color: rgb(51, 136, 51);
 }
 
 .unaffordable {
-    background-color: red;
+    background-color: red !important;
+}
+
+.unaffordable :hover {
+    background-color: rgb(253, 42, 42);
+}
+
+.unaffordable label {
+    cursor: not-allowed !important;
 }
 
 .coin {
@@ -65,8 +101,8 @@ body {
 
 #coinsDiv {
     position: fixed;
-    left: 5%;
-    bottom: 5%;
+    left: 5vh;
+    bottom: 5vh;
     z-index: 100;
 }
 
@@ -130,80 +166,6 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-
-/* collapsible */
-
-.collapsible {
-    background-color: transparent;
-    cursor: pointer;
-    padding: 15px 0px 5px 0px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 30px;
-}
-
-.collapsible::after {
-    font-weight: bold;
-    background-color: green;
-}
-
-.content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-}
-
-.content div {
-    padding: 10px 18px;
-    font-size: 1vw;
-}
-
-.content #collapsibleContent div {
-    margin-top: 10px;
-}
-
-#mainContainer:last-child {
-    margin-bottom: 20px;
-}
-
-.content p {
-    margin: 20px 0px;
-}
-
-/* slider */
-
-.slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 25px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-}
-
-.slider:hover {
-    opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    background: #04AA6D;
-    cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    background: #04AA6D;
-    cursor: pointer;
 }
 
 /* background variations */
@@ -282,4 +244,219 @@ body {
 
 .var19 {
     background-image: url(./other/var19.webp);
+}
+
+/* sidebar */
+
+.sidebar * {
+    color: #b0b0b0;
+}
+
+input[type=number] {
+    color: #b0b0b0;
+    background-color: transparent;
+    border-color: #b0b0b0;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#openButton {
+    border: none;
+    background-color: transparent;
+    font-size: 50px;
+    cursor: pointer;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #04AA6D;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #04AA6D;
+    cursor: pointer;
+}
+
+/* sidebar */
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 187;
+    top: 0;
+    left: 0;
+    background-color: #2b2b2b;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left 0.5s;
+    padding-top: 10px;
+    padding-left: 15px;
+    position: fixed;
+    z-index: 187;
+    left: 2vh;
+    top: 2vh;
+}
+
+#mainContainer {
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 60px;
+    width: max-content;
+    margin-right: 5vw;
+}
+
+@media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+
+    .sidebar a {
+        font-size: 18px;
+    }
+}
+
+/*collapsible*/
+
+.collapsible {
+    background-color: transparent;
+    cursor: pointer;
+    padding: 15px 0px 5px 0px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 30px;
+}
+
+.collapsible::after {
+    font-weight: bold;
+    background-color: green;
+}
+
+.content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.content div {
+    padding: 10px 18px;
+    font-size: 24px;
+}
+
+.content #collapsibleContent div {
+    margin-top: 10px;
+}
+
+#mainContainer:last-child {
+    margin-bottom: 20px;
+}
+
+.content p {
+    margin: 20px 0px;
+}
+
+/* radio as button */
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    margin: 0 5px 0 0;
+    position: relative;
+    align-self: center;
+    justify-self: center;
+    cursor: pointer;
+    width: 6vw;
+    height: 3.5vh;
+    border-radius: 0.25vw !important;
+}
+
+.button label,
+.button input {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.button input[type="radio"] {
+    opacity: 0.011;
+    z-index: 100;
+}
+
+/* .button input[type="radio"]:checked+label {
+    background: #20b8be;
+    border-radius: 4px;
+} */
+
+.button label {
+    cursor: pointer;
+    z-index: 90;
+    line-height: 1.8em;
+    color: black;
+}
+
+.btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
 }
