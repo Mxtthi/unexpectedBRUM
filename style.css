@@ -22,10 +22,20 @@ body {
     color: black;
 }
 
+#codeInput {
+    padding: 0.2vw 0.1vw;
+}
+
+#result {
+    padding-left: 0;
+}
+
+.inputButton {
+    padding: 0.2vw 0.3vw;
+    min-width: 5vw;
+}
+
 .settings {
-    /*display: flex;
-	justify-content: center;
-	align-content: center;*/
     background-color: grey;
     width: 15vw;
     z-index: 100;

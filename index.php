@@ -109,12 +109,12 @@
                         <input id="areaSizeSlider" type="range" min="5" max="200" value="100">
                         <span id="areaSizeOutput"></span>
                     </div>
-                </div>
-                <div id="codeDiv">
-                    <input type="submit" id="getCode" name="getCode" value="Create Code">
-                    <input type="submit" id="setCode" name="setCode" value="Load Code">
-                    <div id="result">
-                        <input type="text" id="codeInput" name="codeInput" placeholder="4F35">
+                    <div id="codeDiv">
+                        <input type="submit" id="getCode" class="inputButton" name="getCode" value="Create Code">
+                        <input type="submit" id="setCode" class="inputButton" name="setCode" value="Load Code">
+                        <div id="result">
+                            <input type="text" id="codeInput" name="codeInput" placeholder="4F35">
+                        </div>
                     </div>
                 </div>
                 <hr>

@@ -38,6 +38,15 @@ class Car extends World {
         document.getElementsByClassName("car")[0].style.top = pos.top + "px";
     }
 
+    setHeight() {
+        if (sessionStorage.getItem("carsrc") == "tractor.webp" || sessionStorage.getItem("carsrc") == "truck.webp") {
+            if (document.getElementsByClassName("car")[0].style.height != Math.round(this.areaSize * 0.3))
+                document.getElementsByClassName("car")[0].style.height = Math.round(this.areaSize * 0.3) + "px";
+        } else if (document.getElementsByClassName("car")[0].style.height != Math.round(this.areaSize * 0.15)) {
+            document.getElementsByClassName("car")[0].style.height = Math.round(this.areaSize * 0.15) + "px";
+        }
+    }
+
     getPos(elem) {
         let temp = {};
         let pos = elem.getBoundingClientRect();

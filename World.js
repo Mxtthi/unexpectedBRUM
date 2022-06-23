@@ -6,17 +6,19 @@ class World {
         this.gameStatus = true;
         this.collectedCoins = coins;
         this.coinsArr = [];
-        this.ownArr = ["owned", "-", "-", "-", "-", "-"];
-        this.carArr = ["Default", "Flitza", "Wrrom", "BRUM", "fastAF", "kenigseia"];
-        this.carPrices = [0, 25, 50, 100, 250, 1000];
-        this.carSpeeds = [0.75, 1, 1.25, 1.5, 1.75, 2.5];
+        this.ownArr = ["owned", "-", "-", "-", "-", "-", "-", "-"];
+        this.carArr = ["Default", "Schlepper", "Flitza", "Police", "BRUM", "fastAF", "kenigseia", "ukraina"];
+        this.carPrices = [0, 15, 25, 50, 100, 250, 500, 1000];
+        this.carSpeeds = [0.75, 0.9, 1, 1.25, 1.5, 1.75, 2.5, 0.25];
         this.carObj = {
             "Default": "car.webp",
+            "Schlepper": "truck.webp",
             "Flitza": "car4.webp",
-            "Wrrom": "car7.webp",
+            "Police": "police.webp",
             "BRUM": "car6.webp",
             "fastAF": "car5.webp",
             "kenigseia": "car3.webp",
+            "ukraina": "tractor.webp",
         }
 
         this.coinSound = new Audio('./other/coin.mp3');
@@ -287,6 +289,7 @@ class World {
         document.getElementsByClassName("car")[0].src = "./other/" + sessionStorage.getItem("carsrc");
         world.selectItem(document.getElementsByClassName("status")[sessionStorage.getItem("car")]);
         world.checkPrices();
+        world.car.setHeight();
 
         if (!world.car.isDriving) world.centerElem(document.getElementsByClassName("car")[0]);
 
