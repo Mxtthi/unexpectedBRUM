@@ -290,6 +290,7 @@ class World {
         world.selectItem(document.getElementsByClassName("status")[sessionStorage.getItem("car")]);
         world.checkPrices();
         world.car.setHeight();
+        world.car.playSpecificAudio();
 
         if (!world.car.isDriving) world.centerElem(document.getElementsByClassName("car")[0]);
 

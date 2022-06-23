@@ -14,6 +14,7 @@
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -82,7 +83,7 @@
 
     <div id="home">
         <a href="../../">
-            <p>Home</p>
+            <button class="homeButton"><i class="fa fa-home"></i> Home</button>
         </a>
     </div>
 

@@ -6,6 +6,8 @@ class Car extends World {
         this.drivingSound = new Audio('./other/driving.mp3');
         this.brakingSound = new Audio('./other/brake.mp3');
         this.idleSound = new Audio('./other/idle.mp3');
+        this.gas = new Audio('./other/gas.mp3');
+        this.police = new Audio('./other/police.mp3');
         this.velocity = 0;
         this.accelerating = false;
         this.isDriving = false;
@@ -13,7 +15,11 @@ class Car extends World {
         this.drivingSound.volume = 0.1;
         this.brakingSound.volume = 0.1;
         this.idleSound.volume = 0.3;
+        this.gas.volume = 0.1;
+        this.police.volume = 0.8;
         this.idleSound.loop = true;
+        this.gas.loop = true;
+        this.police.loop = true;
         this.drivingSound.loop = true;
         this.brakingSound.loop = true;
 
@@ -21,10 +27,18 @@ class Car extends World {
         this.spawnCar();
     }
 
+    playSpecificAudio() {
+        world.car.pauseAudio(world.car.police)
+        world.car.pauseAudio(world.car.gas)
+
+        if (sessionStorage.getItem("carsrc") == "police.webp") world.car.resumeAudio(world.car.police);
+        if (sessionStorage.getItem("carsrc") == "tractor.webp") world.car.resumeAudio(world.car.gas);
+    }
+
     resumeAudio(audio) {
         audio.play();
     }
-
+    w
     pauseAudio(audio) {
         audio.pause();
     }
