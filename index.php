@@ -98,11 +98,11 @@
                         <span id="trackLengthOutput"></span>
                     </div>
                     <div><label for="worldSizeSlider">World-Size:</label><br>
-                        <input id="worldSizeSlider" type="range" min="5" max="50" value="25">
+                        <input id="worldSizeSlider" type="range" min="5" max="75" value="30">
                         <span id="worldSizeOutput"></span>
                     </div>
                     <div><label for="ViewRadiusSlider">Render-Distance:</label><br>
-                        <input id="ViewRadiusSlider" type="range" min="1" max="100" value="2">
+                        <input id="ViewRadiusSlider" type="range" min="1" max="100" value="5">
                         <span id="ViewRadiusOutput"></span>
                     </div>
                     <div><label for="areaSizeSlider">Field of View:</label><br>

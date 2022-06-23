@@ -172,13 +172,11 @@ class World {
             document.getElementById("status" + i).appendChild(statusLabel);
 
             world.setItemTo(document.getElementById("status" + i), world.ownArr[i]);
-
             i++;
         }
     }
 
     setItemTo(elem, value) {
-        // console.log(elem);
         let int = elem.id.substring(elem.id.length - 1);
         let possibilities = ["owned", "affordable", "unaffordable"];
         let index = elem.id.charAt(elem.id.length - 1);
@@ -204,9 +202,6 @@ class World {
             case "unaffordable":
                 document.getElementById("label" + int).textContent = world.carPrices[index] + " coins";
                 break;
-            default:
-                console.log("invalid value");
-                break;
         }
     }
 
@@ -218,8 +213,6 @@ class World {
             }
             elem.classList.add("selected");
             elem.value = "Selected";
-        } else {
-            console.log("not owned");
         }
     }
 
@@ -323,8 +316,8 @@ class World {
         renderPosY = world.getRenderPosY(currentY, viewRadius)
         renderPosX = world.getRenderPosX(currentX, viewRadius)
 
-        for (let y = renderPosY; y <= currentY + viewRadius; y++) {
-            for (let x = renderPosX; x <= currentX + viewRadius; x++) {
+        for (let y = renderPosY; y <= currentY + parseInt(viewRadius); y++) {
+            for (let x = renderPosX; x <= currentX + parseInt(viewRadius); x++) {
                 if (y < 0 || x < 0 || y >= world.worldSize || x >= world.worldSize) break;
                 document.getElementsByClassName(`x${x} y${y} `)[0].classList.remove("invisible");
             }
