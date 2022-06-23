@@ -286,6 +286,8 @@ class World {
         world.selectItem(document.getElementsByClassName("status")[sessionStorage.getItem("car")]);
         world.checkPrices();
 
+        if (!world.car.isDriving) world.centerElem(document.getElementsByClassName("car")[0]);
+
         let currentX, currentY, renderPosX, renderPosY;
         if (world.checkIfElementsOverlap(document.getElementsByClassName("car")[0], document.getElementsByClassName("end")[0]) && world.gameStatus) {
             world.drivenOn[world.track.trackLength - 1] = true;

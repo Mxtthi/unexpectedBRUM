@@ -102,7 +102,7 @@
                         <span id="worldSizeOutput"></span>
                     </div>
                     <div><label for="ViewRadiusSlider">Render-Distance:</label><br>
-                        <input id="ViewRadiusSlider" type="range" min="1" max="100" value="5">
+                        <input id="ViewRadiusSlider" type="range" min="1" max="75" value="5">
                         <span id="ViewRadiusOutput"></span>
                     </div>
                     <div><label for="areaSizeSlider">Field of View:</label><br>
