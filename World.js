@@ -188,8 +188,10 @@ class World {
         if (value != "owned") {
             elem.classList.remove("selected");
         }
-        if (document.getElementById("button" + int).checked && world.ownArr[int] != "owned") {
-            document.getElementById("button1").checked = true;
+        if (document.getElementById("button" + int).checked && world.ownArr[int] != "owned" && world.ownArr[int] != "-") {
+            console.log(int, world.ownArr[int]);
+            console.log(world.ownArr[int]);
+            document.getElementById("button0").checked = true;
         }
 
         switch (value) {
