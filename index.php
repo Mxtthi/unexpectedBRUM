@@ -62,9 +62,11 @@
 
     if (isset($_SESSION["track"])) {
         $track = $_SESSION["track"];
+        $worldsize = $_SESSION["worldsize"];
         unset($_SESSION["track"]);
     } else {
         $track = 0;
+        $worldsize = 0;
     }
     ?>
 
@@ -78,6 +80,7 @@
         }
         echo "var coins = $coins;";
         echo "var trackCourse = $track;";
+        echo "var wSize = $worldsize"
         ?>
     </script>
 

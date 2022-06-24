@@ -42,9 +42,8 @@ class World {
                 world.collectedCoins++;
                 document.getElementById("coinCounter").innerHTML = world.collectedCoins;
                 let clone = world.coinSound.cloneNode(true);
-                clone.volume = 0.025;
+                clone.volume = 0.025 * soundVolume;
                 clone.play();
-                console.log(clone.volume)
                 world.coinsArr.splice(i, 1);
             }
         }
@@ -255,7 +254,8 @@ class World {
 
     sendButtonPressed() {
         let data = { "track": world.track.trackCourse };
-        console.log(data.track.length);
+        data.worldsize = parseInt(worldSize);
+        console.log(data);
         world.sendData(data);
     }
 

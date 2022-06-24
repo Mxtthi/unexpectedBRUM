@@ -2,6 +2,7 @@ console.log(cars);
 let world = new World(areaSize, worldSize, coins, cars)
 world.track = new Track(world.areaSize, world.worldSize, trackLength);
 if (trackCourse != 0 && typeof trackCourse !== undefined) {
+    console.log(trackCourse);
     world.track.trackCourse = trackCourse;
     world.track.area = world.track.createAreaArray(world.track.trackCourse);
 }

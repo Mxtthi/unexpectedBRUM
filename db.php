@@ -49,7 +49,9 @@ if (isset($_POST["code"])) {
         $error .= "Track existiert nicht";
     } else {
         $track = $data[0]["contents"];
+        $worldsize = $data[0]["worldsize"];
         $_SESSION["track"] = $track;
+        $_SESSION["worldsize"] = $worldsize;
         echo "<script>window.location.reload()</script>";
     }
 }
@@ -57,6 +59,7 @@ if (isset($_POST["code"])) {
 if (isset($_POST["track"])) {
     if (isset($_SESSION["auth"])) {
         $track = json_encode($_POST["track"]);
+        $worldsize = $_POST["worldsize"];
         $userID = $_SESSION["id"];
         $trackCode;
         $rndm;
@@ -78,10 +81,10 @@ if (isset($_POST["track"])) {
             }
         } while ($isUsed);
 
-        $sql = "INSERT INTO tracks (trackCode, userID, contents) 
-        VALUES (?, ?, ?);";
+        $sql = "INSERT INTO tracks (trackCode, userID, contents, worldsize) 
+        VALUES (?, ?, ?, ?);";
         $stmt = $db->prepare($sql);
-        $stmt->execute([$trackCode, $userID, $track]);
+        $stmt->execute([$trackCode, $userID, $track, $worldsize]);
         echo '<input type="text" id="codeInput" name="codeInput" value=' . $trackCode  . '>';
     } else {
         $error .= "Du bist nicht eingeloggt.";
