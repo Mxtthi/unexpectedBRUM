@@ -135,11 +135,6 @@
         <button id="openButton" class="openbtn" onclick="openNav()">☰</button>
     </div>
 
-
-
-
-
-
     <script>
         collapsible();
 
@@ -194,14 +189,6 @@
             NavOpen = false;
         }
     </script>
-
-
-
-
-
-
-
-
 
     <div id="coinsDiv">
         <span id="coinCounter">0</span>

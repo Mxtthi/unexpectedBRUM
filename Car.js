@@ -12,11 +12,11 @@ class Car extends World {
         this.accelerating = false;
         this.isDriving = false;
 
-        this.drivingSound.volume = 0.1;
-        this.brakingSound.volume = 0.1;
+        this.drivingSound.volume = 0.4;
+        this.brakingSound.volume = 0.075;
         this.idleSound.volume = 0.3;
-        this.gas.volume = 0.1;
-        this.police.volume = 0.8;
+        this.gas.volume = 0.15;
+        this.police.volume = 0.5;
         this.idleSound.loop = true;
         this.gas.loop = true;
         this.police.loop = true;

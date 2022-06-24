@@ -7,7 +7,7 @@ class World {
         this.collectedCoins = coins;
         this.coinsArr = [];
         this.ownArr = ["owned", "-", "-", "-", "-", "-", "-", "-"];
-        this.carArr = ["Default", "Schlepper", "Flitza", "Police", "BRUM", "fastAF", "kenigseia", "ukraina"];
+        this.carArr = ["Default", "Schlepper", "Flitza", "Police", "BRUM", "fastAF", "Kenigsegg", "Traktor"];
         this.carPrices = [0, 15, 25, 50, 100, 250, 500, 1000];
         this.carSpeeds = [0.75, 0.9, 1, 1.25, 1.5, 1.75, 2.5, 0.25];
         this.carObj = {
@@ -17,8 +17,8 @@ class World {
             "Police": "police.webp",
             "BRUM": "car6.webp",
             "fastAF": "car5.webp",
-            "kenigseia": "car3.webp",
-            "ukraina": "tractor.webp",
+            "Kenigsegg": "car3.webp",
+            "Traktor": "tractor.webp",
         }
 
         this.coinSound = new Audio('./other/coin.mp3');
@@ -42,8 +42,9 @@ class World {
                 world.collectedCoins++;
                 document.getElementById("coinCounter").innerHTML = world.collectedCoins;
                 let clone = world.coinSound.cloneNode(true);
-                clone.volume = 0.1;
+                clone.volume = 0.025;
                 clone.play();
+                console.log(clone.volume)
                 world.coinsArr.splice(i, 1);
             }
         }
@@ -242,13 +243,12 @@ class World {
 
     buyCar(value) {
         if (world.ownArr[value] != "owned" && world.collectedCoins >= world.carPrices[value]) {
-            console.log("valid");
             world.collectedCoins -= world.carPrices[value];
             document.getElementById("coinCounter").innerHTML = world.collectedCoins;
             let data = {};
-            data.coins = world.collectedCoins;
             data.car = world.carArr[value];
             world.sendData(data);
+            console.log(data);
             world.updateOwnedCars([world.carArr[value]]);
         }
     }

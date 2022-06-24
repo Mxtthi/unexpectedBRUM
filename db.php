@@ -4,7 +4,7 @@ session_start();
 require "../../database.php";
 $error = "";
 
-if (isset($_POST["car"])) {
+if (isset($_POST["car"]) && isset($_SESSION["id"])) {
     $car = $_POST["car"];
     $userID = $_SESSION["id"];
 
@@ -89,4 +89,4 @@ if (isset($_POST["track"])) {
     }
 }
 
-echo "<br>" . $error;
+echo "<br><p style='color:#b0b0b0'>" . $error . "</p>";
